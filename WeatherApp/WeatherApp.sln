@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WA-Front", "WA-Front\WA-Fro
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WA-WeatherAPI", "WA-WeatherAPI\WA-WeatherAPI.csproj", "{44B2BBB8-B213-4C76-AD18-E00FE4145023}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WA-Utility", "WA-Utility\WA-Utility.csproj", "{5778F447-DBDC-475B-974A-B2B7AF4DC821}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WA-Utility", "WA-Utility\WA-Utility.csproj", "{5778F447-DBDC-475B-974A-B2B7AF4DC821}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WA-UnitTests", "WA-UnitTests\WA-UnitTests.csproj", "{E03546BB-E03A-4218-92BC-04A781D12DC1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +31,10 @@ Global
 		{5778F447-DBDC-475B-974A-B2B7AF4DC821}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5778F447-DBDC-475B-974A-B2B7AF4DC821}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5778F447-DBDC-475B-974A-B2B7AF4DC821}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E03546BB-E03A-4218-92BC-04A781D12DC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E03546BB-E03A-4218-92BC-04A781D12DC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E03546BB-E03A-4218-92BC-04A781D12DC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E03546BB-E03A-4218-92BC-04A781D12DC1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

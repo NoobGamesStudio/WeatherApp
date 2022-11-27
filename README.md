@@ -1,5 +1,5 @@
 # WeatherApp
 Projekt Zaliczeniowy
 
-Autorzy:
+# Autorzy:
 Daniel Strobejko

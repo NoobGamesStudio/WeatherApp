@@ -1,5 +1,7 @@
 # WeatherApp
 Projekt Zaliczeniowy
 
-Autor:
-Julia Wiklińska
+# Autorzy
+- Cezary Jarocki
+- Daniel Strobejko
+- Julia Wiklińska

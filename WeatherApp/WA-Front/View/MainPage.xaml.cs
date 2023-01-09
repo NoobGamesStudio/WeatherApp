@@ -1,4 +1,5 @@
 ﻿using WA_Front.Service;
+using CommunityToolkit.Mvvm.Input;
 
 namespace WA_Front.View;
 
@@ -27,6 +28,12 @@ public partial class MainPage : ContentPage
 			CounterBtn.Text = $"Clicked {count} times";
 
 		SemanticScreenReader.Announce(CounterBtn.Text);
+	}
+
+	[RelayCommand]
+	private async Task Navigate(string uri)
+	{
+		await Shell.Current.GoToAsync(uri);
 	}
 }
 

@@ -22,6 +22,10 @@ public static class MauiProgram
 		builder.Services.AddSingleton<MainPage>();
 		builder.Services.AddSingleton<WA_Utility.Service.ExampleService>();
 		builder.Services.AddSingleton<WA_WeatherAPI.Service.ExampleService>();
-		return builder.Build();
+
+        builder.Services.AddTransient<NowPage>();
+        builder.Services.AddTransient<HourlyPage>();
+        builder.Services.AddTransient<DailyPage>();
+        return builder.Build();
 	}
 }

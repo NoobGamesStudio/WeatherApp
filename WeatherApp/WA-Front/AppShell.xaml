@@ -6,8 +6,8 @@
     xmlns:view="clr-namespace:WA_Front.View"
     Shell.FlyoutBehavior="Disabled">
 
+
     <ShellContent
-        Title="Home"
         ContentTemplate="{DataTemplate view:MainPage}"
         Route="MainPage" />
 

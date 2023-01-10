@@ -25,7 +25,7 @@ namespace WA_WeatherAPI.Model.Daily
         public DailyUnits DailyUnits { get; set; }
 
         [JsonPropertyName("daily")]
-        public DailyClass DailyVariables { get; set; }
+        public DailyClass DailyWeather { get; set; }
     }
 
     public partial class DailyClass

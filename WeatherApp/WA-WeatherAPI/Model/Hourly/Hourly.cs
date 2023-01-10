@@ -25,7 +25,7 @@ namespace WA_WeatherAPI.Model.Hourly
         public HourlyUnits HourlyUnits { get; set; }
 
         [JsonPropertyName("hourly")]
-        public HourlyClass HourlyHourly { get; set; }
+        public HourlyClass HourlyWeather { get; set; }
     }
 
     public partial class HourlyClass

@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="WA_Front.View.HourlyPage"
-             xmlns:view="clr-namespace:WA_Front.View">
+             x:Class="WA_Front.View.NavBar">
     <VerticalStackLayout>
         <Label 
-            Text="Welcome to HourlyPage"
+            Text="NavBar"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-        <Button Text="Go Back"/>
     </VerticalStackLayout>
 </ContentView>

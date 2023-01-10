@@ -2,16 +2,10 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace WA_Front.View;
 
-public partial class DailyPage : ContentPage
+public partial class DailyPage : ContentView
 {
 	public DailyPage()
 	{
 		InitializeComponent();
-	}
-
-	[RelayCommand]
-	private async Task Navigate()
-	{
-		await Shell.Current.GoToAsync("..");
-	}
+    }
 }

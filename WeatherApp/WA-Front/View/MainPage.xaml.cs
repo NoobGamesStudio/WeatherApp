@@ -29,11 +29,5 @@ public partial class MainPage : ContentPage
 
 		SemanticScreenReader.Announce(CounterBtn.Text);
 	}
-
-	[RelayCommand]
-	private async Task Navigate(string uri)
-	{
-		await Shell.Current.GoToAsync(uri);
-	}
 }
 

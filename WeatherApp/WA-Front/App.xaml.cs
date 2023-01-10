@@ -8,4 +8,16 @@ public partial class App : Application
 
 		MainPage = new AppShell();
 	}
+
+    protected override Window CreateWindow(IActivationState activationState)
+    {
+        var window = base.CreateWindow(activationState);
+
+		if(window is not null)
+		{
+			window.Title = "Testing title";
+		}
+
+		return window;
+    }
 }

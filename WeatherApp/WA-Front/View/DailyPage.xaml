@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="WA_Front.View.DailyPage"
              xmlns:view="clr-namespace:WA_Front.View">
@@ -8,7 +8,6 @@
             Text="Welcome to DailyPage"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-        <Button Command="{Binding Source={x:RelativeSource AncestorType={x:Type view:DailyPage}}, Path=NavigateCommand}" 
-                Text="Go Back"/>
+        <Button Text="Go Back"/>
     </VerticalStackLayout>
-</ContentPage>
+</ContentView>

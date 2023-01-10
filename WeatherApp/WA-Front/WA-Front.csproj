@@ -73,6 +73,12 @@
 	  <MauiXaml Update="View\HourlyPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="View\MasterPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\NavBar.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="View\NowPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

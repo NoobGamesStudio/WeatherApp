@@ -2,12 +2,96 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="WA_Front.View.NowPage"
-             xmlns:view="clr-namespace:WA_Front.View">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to Now Page"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-        <Button Text="Go Back"/>
-    </VerticalStackLayout>
+             xmlns:canvas="clr-namespace:WA_Front.Canvas"
+             xmlns:model="clr-namespace:WA_Front.Model"
+             xmlns:view="clr-namespace:WA_Front.View"
+             BackgroundColor="#331144">
+    <ContentView.Resources>
+        <Style TargetType="Label">
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="VerticalTextAlignment" Value="Center"/>
+            <Setter Property="HorizontalTextAlignment" Value="Center"/>
+        </Style>
+    </ContentView.Resources>
+    <Grid RowDefinitions="4*,2*,Auto"
+          HorizontalOptions="FillAndExpand"
+          RowSpacing="10"
+          Padding="10"
+          WidthRequest="{Binding Height, Source={x:Reference MainGrid}}">
+        <Grid Grid.Row="0" 
+                  RowDefinitions="Auto,*,*" 
+                  ColumnDefinitions="*,Auto"
+                  BindingContext="{Binding currentWeatherModel}"
+                  BackgroundColor="White"
+              x:Name="MainGrid">
+            <Label Grid.Row="0" 
+                       Grid.Column="0"
+                       Text="{Binding Temperature, StringFormat='{0}C'}"
+                       BackgroundColor="#ffaaaa"/>
+            <Image Grid.Row="0" 
+                       Grid.Column="1"
+                   Aspect="AspectFill"
+                       Source="p50.png"/>
+            <Label Grid.Row="1" 
+                       Grid.Column="0"
+                       Text="{Binding RealTemperature, StringFormat='{0} Real C'}"
+                       BackgroundColor="#ffcccc"/>
+            <Label Grid.Row="1" 
+                       Grid.Column="1"
+                       Text="{Binding Rain, StringFormat='{0}%'}"
+                       BackgroundColor="#ffdddd"/>
+            <Label Grid.Row="2" 
+                       Grid.ColumnSpan="2"
+                       Text="{Binding Smth, FallbackValue='none'}"
+                       BackgroundColor="#ffeeee"/>
+        </Grid>
+
+        <SearchBar Grid.Row="2" 
+                   HorizontalOptions="FillAndExpand"
+                   BackgroundColor="White"
+                   Placeholder="Miasto"/>
+        <HorizontalStackLayout Grid.Row="1" 
+                               BindableLayout.ItemsSource="{Binding dayPartWeatherModel}" 
+                               HorizontalOptions="FillAndExpand"
+                               Background="RED"
+                               Spacing="10">
+            <HorizontalStackLayout.Resources>
+                <Style TargetType="Label">
+                    <Setter Property="Padding" Value="10"/>
+                    <Setter Property="VerticalTextAlignment" Value="Center"/>
+                    <Setter Property="HorizontalTextAlignment" Value="Center"/>
+                </Style>
+            </HorizontalStackLayout.Resources>
+            <BindableLayout.ItemTemplate>
+                <DataTemplate>
+                    <Grid RowDefinitions="*,Auto,*" 
+                          ColumnDefinitions="Auto, *"
+                          BackgroundColor="White"
+                          HorizontalOptions="Center">
+                        <Label Grid.Row="0" 
+                               Grid.ColumnSpan="2" 
+                               Text="{Binding Part}"
+                               BackgroundColor="#ffaaaa"/>
+                        <Image Grid.Row="1" 
+                               Grid.Column="0" 
+                               Source="p50.png"
+                               Aspect="AspectFill"
+                               BackgroundColor="#ffbbbb"/>
+                        <Label Grid.Row="1" 
+                               Grid.Column="1" 
+                               Text="{Binding Temperature}"
+                               BackgroundColor="#ffcccc"/>
+                        <Label Grid.Row="2" 
+                               Grid.Column="0" 
+                               Text="{Binding Rain}"
+                               BackgroundColor="#ffdddd"/>
+                        <Label Grid.Row="2" 
+                               Grid.Column="1" 
+                               Text="{Binding Temperature}"
+                               BackgroundColor="#ffeeee"/>
+                    </Grid>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </HorizontalStackLayout>
+    </Grid>
 </ContentView>

@@ -5,12 +5,12 @@
              xmlns:service="clr-namespace:WA_Front.Service"
              x:Class="WA_Front.View.MasterPage"
              x:Name="thisPage">
-    <Grid RowDefinitions="*,Auto">
-        <VerticalStackLayout Grid.Row="0" BindableLayout.ItemsSource="{Binding Views, Source={x:Reference thisPage}}">
+    <Grid ColumnDefinitions="Auto,*">
+        <view:NowPage Grid.Column="0"/>
+        <VerticalStackLayout Grid.Column="1" 
+                             BindableLayout.ItemsSource="{Binding Views, Source={x:Reference thisPage}}"
+                             BackgroundColor="Aquamarine">
 
         </VerticalStackLayout>
-        <HorizontalStackLayout Grid.Row="1">
-            <Label Text="co"/>
-        </HorizontalStackLayout>
     </Grid>
 </ContentPage>

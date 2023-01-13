@@ -28,6 +28,7 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+		<DefaultLanguage>pl</DefaultLanguage>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -60,10 +61,6 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\WA-Utility\WA-Utility.csproj" />
 	  <ProjectReference Include="..\WA-WeatherAPI\WA-WeatherAPI.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Model\" />
 	</ItemGroup>
 
 	<ItemGroup>

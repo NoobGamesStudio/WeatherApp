@@ -28,12 +28,7 @@ public static class MauiProgram
 				events.AddWindows(windows => 
 					windows.OnWindowCreated((window) => 
 					{
-						IntPtr nativeWindowHandle = WinRT.Interop.WindowNative.GetWindowHandle(window);
-						WindowId nativeWindowId = Win32Interop.GetWindowIdFromWindow(nativeWindowHandle);
-						AppWindow appWindow = AppWindow.GetFromWindowId(nativeWindowId);           
-						window.ExtendsContentIntoTitleBar = false;
-						window.Title = "Windows Title";
-						(appWindow.Presenter as OverlappedPresenter).SetBorderAndTitleBar(false, false);
+						//window.ExtendsContentIntoTitleBar = false;
 					})
 				);
 #endif

@@ -1,113 +1,98 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-
 namespace WA_WeatherAPI.Model.Daily
 {
-    public partial class Daily
+    public record Daily
     {
+        [JsonPropertyName("latitude")]
+        public double Latitude { get; init; }
 
-        [JsonPropertyName("generationtime_ms")]
-        public double GenerationtimeMs { get; set; }
-
-        [JsonPropertyName("utc_offset_seconds")]
-        public long UtcOffsetSeconds { get; set; }
+        [JsonPropertyName("longitude")]
+        public double Longitude { get; init; }
 
         [JsonPropertyName("timezone")]
-        public string Timezone { get; set; }
-
-        [JsonPropertyName("timezone_abbreviation")]
-        public string TimezoneAbbreviation { get; set; }
-
-        [JsonPropertyName("elevation")]
-        public long Elevation { get; set; }
+        public string? Timezone { get; init; }
 
         [JsonPropertyName("daily_units")]
-        public DailyUnits DailyUnits { get; set; }
+        public DailyUnits? Units { get; init; }
 
         [JsonPropertyName("daily")]
-        public DailyClass DailyWeather { get; set; }
+        public DailyData? Data { get; init; }
     }
 
-    public partial class DailyClass
+    public record DailyData
     {
         [JsonPropertyName("time")]
-        public DateTimeOffset[] Time { get; set; }
+        public List<DateTimeOffset>? Time { get; init; }
 
         [JsonPropertyName("weathercode")]
-        public long[] Weathercode { get; set; }
+        public List<long>? Weathercode { get; init; }
 
         [JsonPropertyName("temperature_2m_max")]
-        public double[] Temperature2MMax { get; set; }
+        public List<double>? Temperature2MMax { get; init; }
 
         [JsonPropertyName("temperature_2m_min")]
-        public double[] Temperature2MMin { get; set; }
+        public List<double>? Temperature2MMin { get; init; }
 
         [JsonPropertyName("sunrise")]
-        public string[] Sunrise { get; set; }
+        public List<string>? Sunrise { get; init; }
 
         [JsonPropertyName("sunset")]
-        public string[] Sunset { get; set; }
+        public List<string>? Sunset { get; init; }
 
         [JsonPropertyName("precipitation_sum")]
-        public double[] PrecipitationSum { get; set; }
+        public List<double>? PrecipitationSum { get; init; }
 
         [JsonPropertyName("precipitation_hours")]
-        public long[] PrecipitationHours { get; set; }
+        public List<float>? PrecipitationHours { get; init; }
 
         [JsonPropertyName("windspeed_10m_max")]
-        public double[] Windspeed10MMax { get; set; }
+        public List<double>? Windspeed10MMax { get; init; }
 
         [JsonPropertyName("windgusts_10m_max")]
-        public double[] Windgusts10MMax { get; set; }
+        public List<double>? Windgusts10MMax { get; init; }
 
         [JsonPropertyName("winddirection_10m_dominant")]
-        public long[] Winddirection10MDominant { get; set; }
+        public List<long>? Winddirection10MDominant { get; init; }
 
         [JsonPropertyName("shortwave_radiation_sum")]
-        public double[] ShortwaveRadiationSum { get; set; }
+        public List<double>? ShortwaveRadiationSum { get; init; }
     }
 
-    public partial class DailyUnits
+    public record DailyUnits
     {
         [JsonPropertyName("time")]
-        public string Time { get; set; }
+        public string? Time { get; init; }
 
         [JsonPropertyName("weathercode")]
-        public string Weathercode { get; set; }
+        public string? Weathercode { get; init; }
 
         [JsonPropertyName("temperature_2m_max")]
-        public string Temperature2MMax { get; set; }
+        public string? Temperature2MMax { get; init; }
 
         [JsonPropertyName("temperature_2m_min")]
-        public string Temperature2MMin { get; set; }
+        public string? Temperature2MMin { get; init; }
 
         [JsonPropertyName("sunrise")]
-        public string Sunrise { get; set; }
+        public string? Sunrise { get; init; }
 
         [JsonPropertyName("sunset")]
-        public string Sunset { get; set; }
+        public string? Sunset { get; init; }
 
         [JsonPropertyName("precipitation_sum")]
-        public string PrecipitationSum { get; set; }
+        public string? PrecipitationSum { get; init; }
 
         [JsonPropertyName("precipitation_hours")]
-        public string PrecipitationHours { get; set; }
+        public string? PrecipitationHours { get; init; }
 
         [JsonPropertyName("windspeed_10m_max")]
-        public string Windspeed10MMax { get; set; }
+        public string? Windspeed10MMax { get; init; }
 
         [JsonPropertyName("windgusts_10m_max")]
-        public string Windgusts10MMax { get; set; }
+        public string? Windgusts10MMax { get; init; }
 
         [JsonPropertyName("winddirection_10m_dominant")]
-        public string Winddirection10MDominant { get; set; }
+        public string? Winddirection10MDominant { get; init; }
 
         [JsonPropertyName("shortwave_radiation_sum")]
-        public string ShortwaveRadiationSum { get; set; }
-    }
-
-    public partial class Daily
-    {
-        public static Daily FromJson(string json) => JsonSerializer.Deserialize<Daily>(json, Converter.Settings);
+        public string? ShortwaveRadiationSum { get; init; }
     }
 }

@@ -1,50 +1,35 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-
 namespace WA_WeatherAPI.Model.Current
 {
-    public partial class Current
+    public record Current
     {
+        [JsonPropertyName("latitude")]
+        public double Latitude { get; init; }
 
-        [JsonPropertyName("generationtime_ms")]
-        public double GenerationtimeMs { get; set; }
-
-        [JsonPropertyName("utc_offset_seconds")]
-        public long UtcOffsetSeconds { get; set; }
+        [JsonPropertyName("longitude")]
+        public double Longitude { get; init; }
 
         [JsonPropertyName("timezone")]
-        public string Timezone { get; set; }
-
-        [JsonPropertyName("timezone_abbreviation")]
-        public string TimezoneAbbreviation { get; set; }
-
-        [JsonPropertyName("elevation")]
-        public long Elevation { get; set; }
+        public string? Timezone { get; init; }
 
         [JsonPropertyName("current_weather")]
-        public CurrentWeather CurrentWeather { get; set; }
+        public CurrentWeather? CurrentWeather { get; init; }
     }
 
-    public partial class CurrentWeather
+    public record CurrentWeather
     {
         [JsonPropertyName("temperature")]
-        public double Temperature { get; set; }
+        public double Temperature { get; init; }
 
         [JsonPropertyName("windspeed")]
-        public double Windspeed { get; set; }
+        public double Windspeed { get; init; }
 
         [JsonPropertyName("winddirection")]
-        public long Winddirection { get; set; }
+        public float Winddirection { get; init; }
 
         [JsonPropertyName("weathercode")]
-        public long Weathercode { get; set; }
+        public long Weathercode { get; init; }
 
         [JsonPropertyName("time")]
-        public string Time { get; set; }
-    }
-
-    public partial class Current
-    {
-        public static Current FromJson(string json) => JsonSerializer.Deserialize<Current>(json, Converter.Settings);
+        public string? Time { get; init; }
     }
 }

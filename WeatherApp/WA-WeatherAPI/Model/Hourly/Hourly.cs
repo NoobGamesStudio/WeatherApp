@@ -1,95 +1,80 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-
 namespace WA_WeatherAPI.Model.Hourly
 {
-    public partial class Hourly
+    public record Hourly
     {
+        [JsonPropertyName("latitude")]
+        public double Latitude { get; init; }
 
-        [JsonPropertyName("generationtime_ms")]
-        public double GenerationtimeMs { get; set; }
-
-        [JsonPropertyName("utc_offset_seconds")]
-        public long UtcOffsetSeconds { get; set; }
+        [JsonPropertyName("longitude")]
+        public double Longitude { get; init; }
 
         [JsonPropertyName("timezone")]
-        public string Timezone { get; set; }
-
-        [JsonPropertyName("timezone_abbreviation")]
-        public string TimezoneAbbreviation { get; set; }
-
-        [JsonPropertyName("elevation")]
-        public long Elevation { get; set; }
+        public string? Timezone { get; init; }
 
         [JsonPropertyName("hourly_units")]
-        public HourlyUnits HourlyUnits { get; set; }
+        public HourlyUnits? Units { get; init; }
 
         [JsonPropertyName("hourly")]
-        public HourlyClass HourlyWeather { get; set; }
+        public HourlyData? Data { get; init; }
     }
 
-    public partial class HourlyClass
+    public record HourlyData
     {
         [JsonPropertyName("time")]
-        public string[] Time { get; set; }
+        public List<string>? Time { get; init; }
 
         [JsonPropertyName("temperature_2m")]
-        public double[] Temperature2M { get; set; }
+        public List<double>? Temperature2M { get; init; }
 
         [JsonPropertyName("relativehumidity_2m")]
-        public long[] Relativehumidity2M { get; set; }
+        public List<long>? Relativehumidity2M { get; init; }
 
         [JsonPropertyName("apparent_temperature")]
-        public double[] ApparentTemperature { get; set; }
+        public List<double>? ApparentTemperature { get; init; }
 
         [JsonPropertyName("precipitation")]
-        public double[] Precipitation { get; set; }
+        public List<double>? Precipitation { get; init; }
 
         [JsonPropertyName("weathercode")]
-        public long[] Weathercode { get; set; }
+        public List<long>? Weathercode { get; init; }
 
         [JsonPropertyName("surface_pressure")]
-        public double[] SurfacePressure { get; set; }
+        public List<double>? SurfacePressure { get; init; }
 
         [JsonPropertyName("cloudcover")]
-        public long[] Cloudcover { get; set; }
+        public List<long>? Cloudcover { get; init; }
 
         [JsonPropertyName("visibility")]
-        public long[] Visibility { get; set; }
+        public List<float>? Visibility { get; init; }
     }
 
-    public partial class HourlyUnits
+    public record HourlyUnits
     {
         [JsonPropertyName("time")]
-        public string Time { get; set; }
+        public string? Time { get; init; }
 
         [JsonPropertyName("temperature_2m")]
-        public string Temperature2M { get; set; }
+        public string? Temperature2M { get; init; }
 
         [JsonPropertyName("relativehumidity_2m")]
-        public string Relativehumidity2M { get; set; }
+        public string? Relativehumidity2M { get; init; }
 
         [JsonPropertyName("apparent_temperature")]
-        public string ApparentTemperature { get; set; }
+        public string? ApparentTemperature { get; init; }
 
         [JsonPropertyName("precipitation")]
-        public string Precipitation { get; set; }
+        public string? Precipitation { get; init; }
 
         [JsonPropertyName("weathercode")]
-        public string Weathercode { get; set; }
+        public string? Weathercode { get; init; }
 
         [JsonPropertyName("surface_pressure")]
-        public string SurfacePressure { get; set; }
+        public string? SurfacePressure { get; init; }
 
         [JsonPropertyName("cloudcover")]
-        public string Cloudcover { get; set; }
+        public string? Cloudcover { get; init; }
 
         [JsonPropertyName("visibility")]
-        public string Visibility { get; set; }
-    }
-
-    public partial class Hourly
-    {
-        public static Hourly FromJson(string json) => JsonSerializer.Deserialize<Hourly>(json, Converter.Settings);
+        public string? Visibility { get; init; }
     }
 }

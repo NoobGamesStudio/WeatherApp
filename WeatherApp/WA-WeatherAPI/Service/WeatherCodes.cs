@@ -1,6 +1,8 @@
-namespace WA_WeatherAPI.Service
+namespace WA_WeatherAPI.Service;
+
+public static class WeatherCodes
 {
-    Dictionary<int, string> weatherecode = new()
+    public static Dictionary<int, string> weatherecode = new()
     {
         {0, "Clear sky"},
         {1, "Mainly clear"},

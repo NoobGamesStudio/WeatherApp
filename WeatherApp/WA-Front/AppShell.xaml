@@ -6,6 +6,6 @@
     xmlns:view="clr-namespace:WA_Front.View"
     Shell.FlyoutBehavior="Disabled">
 
-    <ShellContent ContentTemplate="{DataTemplate view:MasterPage}" />
+    <ShellContent ContentTemplate="{DataTemplate view:MasterPage}"/>
 
 </Shell>

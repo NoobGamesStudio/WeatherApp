@@ -32,6 +32,8 @@ public partial class App : MauiWinUIApplication
         base.OnLaunched(args);
         var AppWindow = GetAppWindowForCurrentWindow();
         AppWindow.Title = "App title";
+        var presenter = AppWindow.Presenter as OverlappedPresenter;
+        presenter.IsResizable = false;
     }
 
     private AppWindow GetAppWindowForCurrentWindow()

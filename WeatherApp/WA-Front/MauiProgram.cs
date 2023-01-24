@@ -1,18 +1,15 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Maui.LifecycleEvents;
 using WA_Front.View;
-
-#if WINDOWS
-using Microsoft.UI;
-using Microsoft.UI.Windowing;
-using Windows.Graphics;
-#endif
+using WA_Front.ViewModel;
 
 namespace WA_Front;
 
 public static class MauiProgram
 {
-	public static MauiApp CreateMauiApp()
+    public static IServiceProvider ServiceProvider;
+
+    public static MauiApp CreateMauiApp()
 	{
 		var builder = MauiApp.CreateBuilder();
 		builder
@@ -36,11 +33,19 @@ public static class MauiProgram
 #if DEBUG
 		builder.Logging.AddDebug();
 #endif
-		builder.Services.AddSingleton<MainPage>();
+        builder.Services.AddTransient<MasterPageModel>();
+        builder.Services.AddTransient<CalendarViewModel>();
+        builder.Services.AddTransient<CurrentViewModel>();
+        builder.Services.AddTransient<HourlyViewModel>();
+        builder.Services.AddTransient<SwitchViewModel>();
+		builder.Services.AddTransient<MasterPage>();
+
 		builder.Services.AddSingleton<WA_Utility.Service.ExampleService>();
 		builder.Services.AddSingleton<WA_WeatherAPI.Service.ExampleService>();
-		builder.Services.AddSingleton<MasterPage>();
 
-        return builder.Build();
+		var app = builder.Build();
+		ServiceProvider = app.Services;
+
+        return app;
 	}
 }

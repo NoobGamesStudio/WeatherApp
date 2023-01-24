@@ -1,18 +1,13 @@
 using System.Collections.ObjectModel;
+using WA_Front.ViewModel;
 
 namespace WA_Front.View;
 
 public partial class MasterPage : ContentPage
 {
-	public ObservableCollection<ContentView> Views { get; set; } = new()
-	{
-		new NowPage(),
-		new HourlyPage(),
-		new DailyPage(),
-	};
-
-	public MasterPage()
+	public MasterPage(MasterPageModel model)
 	{
 		InitializeComponent();
+		BindingContext = model;
 	}
 }

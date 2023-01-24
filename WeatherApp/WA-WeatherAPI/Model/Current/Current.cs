@@ -1,50 +1,34 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
+namespace WA_WeatherAPI.Model.Current;
 
-namespace WA_WeatherAPI.Model.Current
+public record Current
 {
-    public partial class Current
-    {
+    [JsonPropertyName("latitude")]
+    public double Latitude { get; init; }
 
-        [JsonPropertyName("generationtime_ms")]
-        public double GenerationtimeMs { get; set; }
+    [JsonPropertyName("longitude")]
+    public double Longitude { get; init; }
 
-        [JsonPropertyName("utc_offset_seconds")]
-        public long UtcOffsetSeconds { get; set; }
+    [JsonPropertyName("timezone")]
+    public string? Timezone { get; init; }
 
-        [JsonPropertyName("timezone")]
-        public string Timezone { get; set; }
+    [JsonPropertyName("current_weather")]
+    public CurrentWeather? CurrentWeather { get; init; }
+}
 
-        [JsonPropertyName("timezone_abbreviation")]
-        public string TimezoneAbbreviation { get; set; }
+public record CurrentWeather
+{
+    [JsonPropertyName("temperature")]
+    public double Temperature { get; init; }
 
-        [JsonPropertyName("elevation")]
-        public long Elevation { get; set; }
+    [JsonPropertyName("windspeed")]
+    public double Windspeed { get; init; }
 
-        [JsonPropertyName("current_weather")]
-        public CurrentWeather CurrentWeather { get; set; }
-    }
+    [JsonPropertyName("winddirection")]
+    public float Winddirection { get; init; }
 
-    public partial class CurrentWeather
-    {
-        [JsonPropertyName("temperature")]
-        public double Temperature { get; set; }
+    [JsonPropertyName("weathercode")]
+    public long Weathercode { get; init; }
 
-        [JsonPropertyName("windspeed")]
-        public double Windspeed { get; set; }
-
-        [JsonPropertyName("winddirection")]
-        public long Winddirection { get; set; }
-
-        [JsonPropertyName("weathercode")]
-        public long Weathercode { get; set; }
-
-        [JsonPropertyName("time")]
-        public string Time { get; set; }
-    }
-
-    public partial class Current
-    {
-        public static Current FromJson(string json) => JsonSerializer.Deserialize<Current>(json, Converter.Settings);
-    }
+    [JsonPropertyName("time")]
+    public string? Time { get; init; }
 }

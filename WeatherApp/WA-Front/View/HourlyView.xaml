@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:WA_Front.Controls"
+             x:Class="WA_Front.View.HourlyView">
+    <ContentView.Resources>
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="White"/>
+        </Style>
+    </ContentView.Resources>
+    <VerticalStackLayout BindableLayout.ItemsSource="{Binding HourlyWeather}" 
+                         Spacing="5"
+                         Padding="5">
+        <BindableLayout.ItemTemplate>
+            <DataTemplate>
+                <controls:Expander IsExpanded="True" Orientation="Right">
+                    <controls:Expander.MainContent>
+                        <Frame CornerRadius="5" Padding="0">
+                            <Grid ColumnDefinitions="Auto,*,*,*,6*"
+                                  RowDefinitions="50"
+                                  BackgroundColor="#252247">
+                                <Image Grid.Column="0"
+                                   Source="{Binding ImageSource}"/>
+                                <BoxView BackgroundColor="White"
+                                         Grid.Column="0"
+                                         HorizontalOptions="End"
+                                         WidthRequest="2"
+                                         VerticalOptions="FillAndExpand"
+                                         Color="{StaticResource Secondary}"/>
+                                <Label Grid.Column="1"
+                                       BackgroundColor="#312D59"
+                                   Text="{Binding Temperature}"/>
+                                <Label Grid.Column="2"
+                                       BackgroundColor="#2B2759"
+                                   Text="{Binding RealTemperature}"/>
+                                <Label Grid.Column="3"
+                                       BackgroundColor="#242057"
+                                   Text="{Binding Rain}"/>
+                            </Grid>
+                        </Frame>
+                    </controls:Expander.MainContent>
+                </controls:Expander>
+            </DataTemplate>
+        </BindableLayout.ItemTemplate>
+    </VerticalStackLayout>
+</ContentView>

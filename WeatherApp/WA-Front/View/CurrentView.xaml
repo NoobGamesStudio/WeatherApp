@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WA_Front.View.CurrentView"
+             xmlns:model="clr-namespace:WA_Front.Model"
+             xmlns:viewmodel="clr-namespace:WA_Front.ViewModel"
+             x:DataType="viewmodel:CurrentViewModel"
+             BackgroundColor="#331144">
+    <ContentView.Resources>
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="BackgroundColor" Value="#312D59"/>
+        </Style>
+        <Color x:Key="Highlight">#8F89CF</Color>
+    </ContentView.Resources>
+    <Grid RowDefinitions="330,150,Auto"
+          RowSpacing="10"
+          Padding="10"
+          WidthRequest="{Binding Height, Source={x:Reference MainGrid}}">
+        <Border Grid.Row="0" 
+                BackgroundColor="White">
+            <Grid RowDefinitions="2*,*,*" 
+                  ColumnDefinitions="*,*"
+                  BindingContext="{Binding CurrentWeather}"
+                  x:Name="MainGrid">
+                <Label Grid.Row="0" 
+                       Grid.Column="0"
+                       x:DataType="model:CurrentWeatherModel"
+                       Text="{Binding Temperature, StringFormat='{0}C'}"/>
+                <Image Grid.Row="0" 
+                       Grid.Column="1"
+                       Source="p50.png"
+                       Aspect="AspectFill"                     
+                       x:DataType="model:CurrentWeatherModel"/>
+                <Label Grid.Row="1" 
+                       Grid.Column="0"
+                       x:DataType="model:CurrentWeatherModel"
+                       Text="{Binding RealTemperature, StringFormat='{0} Real C'}"/>
+                <Label Grid.Row="1" 
+                       Grid.Column="1"
+                       x:DataType="model:CurrentWeatherModel"
+                       Text="{Binding Rain, StringFormat='{0}%'}"/>
+                <Label Grid.Row="2" 
+                       x:DataType="model:CurrentWeatherModel"
+                       Grid.ColumnSpan="2"
+                       BackgroundColor="{x:StaticResource Highlight}"
+                       Text="wind"/>
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="1"  
+                BackgroundColor="White">
+            <CollectionView ItemsSource="{Binding DayPartWeather}"
+                            x:Name="frame" 
+                            IsEnabled="False">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" 
+                                     Span="3"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:DayPartWeatherModel">
+                        <Grid RowDefinitions="*,Auto,*" 
+                              ColumnDefinitions="Auto, *"
+                              HeightRequest="{Binding Height, Source={x:Reference frame}}">
+                            <Label Grid.Row="0" 
+                                   Grid.ColumnSpan="2" 
+                                   Text="{Binding Part}"/>
+                            <Image Grid.Row="1" 
+                                   Grid.Column="0" 
+                                   Source="p50.png"
+                                   BackgroundColor="{x:StaticResource Highlight}"
+                                   Aspect="AspectFill"/>
+                            <Label Grid.Row="1" 
+                                   Grid.Column="1" 
+                                   BackgroundColor="{x:StaticResource Highlight}"
+                                   Text="{Binding Temperature}"/>
+                            <Label Grid.Row="2" 
+                                   Grid.Column="0" 
+                                   Text="{Binding Rain}"/>
+                            <Label Grid.Row="2" 
+                                   Grid.Column="1" 
+                                   Text="{Binding Temperature}"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Border>
+
+        <SearchBar Grid.Row="2" 
+                   HorizontalOptions="FillAndExpand"
+                   BackgroundColor="White"
+                   Placeholder="Miasto"/>
+    </Grid>
+</ContentView>

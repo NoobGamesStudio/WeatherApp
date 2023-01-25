@@ -5,6 +5,7 @@
              x:Class="WA_Front.View.HourlyView">
     <ContentView.Resources>
         <Style TargetType="Label">
+            <Setter Property="BackgroundColor" Value="Black"/>
             <Setter Property="TextColor" Value="White"/>
         </Style>
     </ContentView.Resources>
@@ -13,8 +14,8 @@
                          Padding="5">
         <BindableLayout.ItemTemplate>
             <DataTemplate>
-                <controls:Expander IsExpanded="True" Orientation="Right">
-                    <controls:Expander.MainContent>
+                <controls:Expander IsExpanded="True" Orientation="Bottom">
+                    <controls:Expander.HeaderContent>
                         <Frame CornerRadius="5" Padding="0">
                             <Grid ColumnDefinitions="Auto,*,*,*,6*"
                                   RowDefinitions="50"
@@ -38,6 +39,9 @@
                                    Text="{Binding Rain}"/>
                             </Grid>
                         </Frame>
+                    </controls:Expander.HeaderContent>
+                    <controls:Expander.MainContent>
+                        <Label Text="more..."/>
                     </controls:Expander.MainContent>
                 </controls:Expander>
             </DataTemplate>

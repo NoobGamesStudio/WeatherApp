@@ -70,13 +70,13 @@ public class Expander : ContentView
         Grid grid = expander.Grid;
 
         (int row, int column) = (
-            orientation == Orientation.Bottom ? 1 : 0, 
-            orientation == Orientation.Right ? 1 : 0);
+            orientation == Orientation.Top ? 1 : 0,
+            orientation == Orientation.Left ? 1 : 0);
 
-        grid.SetRow(expander.MainContent, row);
-        grid.SetColumn(expander.MainContent, column);
-        grid.SetRow(expander.HeaderContent, orientation == Orientation.Top ? 1 : 0);
-        grid.SetColumn(expander.HeaderContent, orientation == Orientation.Left ? 1 : 0);
+        grid.SetRow(expander.MainContent, orientation == Orientation.Bottom ? 1 : 0);
+        grid.SetColumn(expander.MainContent, orientation == Orientation.Right ? 1 : 0);
+        grid.SetRow(expander.HeaderContent, row);
+        grid.SetColumn(expander.HeaderContent, column);
 
         foreach(var rdef in expander.Grid.RowDefinitions)
             rdef.Height = GridLength.Auto;

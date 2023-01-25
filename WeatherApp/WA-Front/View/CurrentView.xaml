@@ -14,9 +14,9 @@
         <Color x:Key="Highlight">#8F89CF</Color>
     </ContentView.Resources>
     <Grid RowDefinitions="330,150,Auto"
+          ColumnDefinitions="330"
           RowSpacing="10"
-          Padding="10"
-          WidthRequest="{Binding Height, Source={x:Reference MainGrid}}">
+          Padding="10">
         <Border Grid.Row="0" 
                 BackgroundColor="White">
             <Grid RowDefinitions="2*,*,*" 

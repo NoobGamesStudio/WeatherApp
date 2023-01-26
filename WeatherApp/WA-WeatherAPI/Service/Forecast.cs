@@ -11,18 +11,21 @@ public class Forecast
     public Forecast(Localization localization) => _localization = localization;
     ~Forecast() => _client.Dispose();
 
-    public async Task<Task<Current?>> Current()
+    public async Task<Task<Current?>> Current(string cityName = "Szczecin")
     {
+        _localization.City = cityName;
         return _client.GetFromJsonAsync<Current?>($"{await CommonUriPart()}&current_weather=true");
     }
 
-    public async Task<Task<Hourly?>> Hourly()
+    public async Task<Task<Hourly?>> Hourly(string cityName = "Szczecin")
     {
+        _localization.City = cityName;
         return _client.GetFromJsonAsync<Hourly>($"{await CommonUriPart()}&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,precipitation,weathercode,surface_pressure,cloudcover,visibility");
     }
 
-    public async Task<Task<Daily?>> Daily()
+    public async Task<Task<Daily?>> Daily(string cityName = "Szczecin")
     {
+        _localization.City = cityName;
         (double lon, double lat) = (await _localization.Data())!;
 
         return _client.GetFromJsonAsync<Daily>($"{await CommonUriPart()}&daily=weathercode,temperature_2m_max,temperature_2m_min,sunrise,sunset,precipitation_sum,precipitation_hours,windspeed_10m_max,windgusts_10m_max,winddirection_10m_dominant,shortwave_radiation_sum");

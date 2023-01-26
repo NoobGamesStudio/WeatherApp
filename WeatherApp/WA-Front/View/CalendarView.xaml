@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:WA_Front.Controls"
+             x:Class="WA_Front.View.CalendarView">
+    <ContentView.Resources>
+        <Style TargetType="Label">
+            <Setter Property="BackgroundColor" Value="Black"/>
+            <Setter Property="TextColor" Value="White"/>
+        </Style>
+        <Style TargetType="BoxView">
+            <Setter Property="Color" Value="{StaticResource Primary}"/>
+            <Setter Property="WidthRequest" Value="100"/>
+            <Setter Property="HeightRequest" Value="100"/>
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup Name="CommonStates">
+                        <VisualState Name="Normal"/>
+                        <VisualState Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="WidthRequest" Value="150"/>
+                                <Setter Property="HeightRequest" Value="150"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentView.Resources>
+    <controls:Expander IsExpanded="True" Orientation="Right">
+        <controls:Expander.HeaderContent>
+            <controls:HorizontalFlexLayout Spacing="10"
+                                           Padding="5">
+                <BoxView/>
+                <BoxView/>
+                <BoxView/>
+                <BoxView/>
+                <BoxView/>
+                <BoxView/>
+                <BoxView/>
+                <BoxView/>
+                <BoxView/>
+                <BoxView/>
+            </controls:HorizontalFlexLayout>
+        </controls:Expander.HeaderContent>
+        <controls:Expander.MainContent>
+            <Label Text="more..."/>
+        </controls:Expander.MainContent>
+    </controls:Expander>
+</ContentView>

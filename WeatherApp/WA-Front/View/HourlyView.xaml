@@ -5,7 +5,6 @@
              x:Class="WA_Front.View.HourlyView">
     <ContentView.Resources>
         <Style TargetType="Label">
-            <Setter Property="BackgroundColor" Value="Black"/>
             <Setter Property="TextColor" Value="White"/>
         </Style>
     </ContentView.Resources>
@@ -14,36 +13,48 @@
                          Padding="5">
         <BindableLayout.ItemTemplate>
             <DataTemplate>
-                <controls:Expander IsExpanded="True" Orientation="Bottom">
-                    <controls:Expander.HeaderContent>
-                        <Frame CornerRadius="5" Padding="0">
+                <Border>
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="5"/>
+                    </Border.StrokeShape>
+                    <controls:Expander Orientation="Bottom">
+                        <controls:Expander.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                        </controls:Expander.GestureRecognizers>
+                        <controls:Expander.HeaderContent>
                             <Grid ColumnDefinitions="Auto,*,*,*,6*"
                                   RowDefinitions="50"
                                   BackgroundColor="#252247">
                                 <Image Grid.Column="0"
-                                   Source="{Binding ImageSource}"/>
-                                <BoxView BackgroundColor="White"
-                                         Grid.Column="0"
-                                         HorizontalOptions="End"
-                                         WidthRequest="2"
-                                         VerticalOptions="FillAndExpand"
-                                         Color="{StaticResource Secondary}"/>
+                                       Source="{Binding ImageSource}"/>
                                 <Label Grid.Column="1"
                                        BackgroundColor="#312D59"
-                                   Text="{Binding Temperature}"/>
+                                       Text="{Binding Temperature}"/>
                                 <Label Grid.Column="2"
                                        BackgroundColor="#2B2759"
-                                   Text="{Binding RealTemperature}"/>
+                                       Text="{Binding RealTemperature}"/>
                                 <Label Grid.Column="3"
                                        BackgroundColor="#242057"
-                                   Text="{Binding Rain}"/>
+                                       Text="{Binding Rain}"/>
                             </Grid>
-                        </Frame>
-                    </controls:Expander.HeaderContent>
-                    <controls:Expander.MainContent>
-                        <Label Text="more..."/>
-                    </controls:Expander.MainContent>
-                </controls:Expander>
+                        </controls:Expander.HeaderContent>
+                        <controls:Expander.MainContent>
+                            <Grid ColumnDefinitions="Auto,*,*,*,6*"
+                                  RowDefinitions="50"
+                                  BackgroundColor="#252247">
+                                <Label Grid.Column="1"
+                                       BackgroundColor="#312D59"
+                                       Text="Inne dane 1"/>
+                                <Label Grid.Column="2"
+                                       BackgroundColor="#2B2759"
+                                       Text="Inne dane 2"/>
+                                <Label Grid.Column="3"
+                                       BackgroundColor="#242057"
+                                       Text="Inne dane 3"/>
+                            </Grid>
+                        </controls:Expander.MainContent>
+                    </controls:Expander>
+                </Border>
             </DataTemplate>
         </BindableLayout.ItemTemplate>
     </VerticalStackLayout>

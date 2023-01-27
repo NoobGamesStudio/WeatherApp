@@ -5,22 +5,22 @@
              x:Class="WA_Front.View.CalendarView">
     <ContentView.Resources>
         <Style TargetType="Label">
-            <Setter Property="BackgroundColor" Value="Black"/>
+            <Setter Property="BackgroundColor" Value="#8F89CF"/>
             <Setter Property="TextColor" Value="White"/>
         </Style>
-        <Style TargetType="BoxView">
-            <Setter Property="Color" Value="{StaticResource Primary}"/>
-            <Setter Property="WidthRequest" Value="100"/>
-            <Setter Property="HeightRequest" Value="100"/>
-            <Setter Property="CornerRadius" Value="5"/>
+        <Style TargetType="Border">
             <Setter Property="VisualStateManager.VisualStateGroups">
                 <VisualStateGroupList>
-                    <VisualStateGroup Name="CommonStates">
-                        <VisualState Name="Normal"/>
-                        <VisualState Name="PointerOver">
+                    <VisualStateGroup Name="CheckedStates">
+                        <VisualState Name="Checked">
                             <VisualState.Setters>
-                                <Setter Property="WidthRequest" Value="150"/>
-                                <Setter Property="HeightRequest" Value="150"/>
+                                <Setter Property="Stroke" Value="{x:StaticResource Primary}"/>
+                                <Setter Property="StrokeThickness" Value="5"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState Name="Unchecked">
+                            <VisualState.Setters>
+                                <Setter Property="StrokeThickness" Value="0"/>
                             </VisualState.Setters>
                         </VisualState>
                     </VisualStateGroup>
@@ -28,24 +28,73 @@
             </Setter>
         </Style>
     </ContentView.Resources>
-    <controls:Expander IsExpanded="True" Orientation="Right">
+    <controls:Expander Orientation="Right" x:Name="test" VerticalOptions="FillAndExpand">
         <controls:Expander.HeaderContent>
             <controls:HorizontalFlexLayout Spacing="10"
-                                           Padding="5">
-                <BoxView/>
-                <BoxView/>
-                <BoxView/>
-                <BoxView/>
-                <BoxView/>
-                <BoxView/>
-                <BoxView/>
-                <BoxView/>
-                <BoxView/>
-                <BoxView/>
+                                           Padding="5"
+                                           BindableLayout.ItemsSource="{Binding DailyWeather}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <RadioButton IsChecked="{Binding IsExpanded, Source={x:Reference test}, Mode=OneWayToSource}">
+                            <RadioButton.ControlTemplate>
+                                <ControlTemplate>
+                                    <Border WidthRequest="125"
+                                            HeightRequest="125">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="5"/>
+                                        </Border.StrokeShape>
+                                        <Grid RowDefinitions="*,*"
+                                              ColumnDefinitions="*,*"
+                                              BindingContext="{TemplateBinding BindingContext}">
+                                            <Grid.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" 
+                                                                      CommandParameter="{TemplateBinding}"/>
+                                            </Grid.GestureRecognizers>
+                                            <Image Grid.Row="0"
+                                                   Grid.Column="0"
+                                                   Source="{Binding ImageSource}"/>
+                                            <Label Grid.Row="0"
+                                                   Grid.Column="1"
+                                                   Text="{Binding Temperature}"/>
+                                            <Label Grid.Row="1"
+                                                   Grid.Column="0"
+                                                   BackgroundColor="#312D59"
+                                                   Text="{Binding RealTemperature}"/>
+                                            <Label Grid.Row="1"
+                                                   Grid.Column="1"
+                                                   BackgroundColor="#312D59"
+                                                   Text="{Binding Rain}"/>
+                                        </Grid>
+                                    </Border>
+                                </ControlTemplate>
+                            </RadioButton.ControlTemplate>
+                        </RadioButton>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
             </controls:HorizontalFlexLayout>
         </controls:Expander.HeaderContent>
         <controls:Expander.MainContent>
-            <Label Text="more..."/>
+            <Grid RowDefinitions="Auto,Auto,Auto,Auto,*"
+                  BackgroundColor="{x:StaticResource Primary}"
+                  WidthRequest="200"
+                  Padding="5"
+                  RowSpacing="5"
+                  x:Name="Content">
+                <Grid.Resources>
+                    <Style TargetType="Label">
+                        <Setter Property="TextColor" Value="White"/>
+                        <Setter Property="BackgroundColor" Value="#312D59"/>
+                    </Style>
+                </Grid.Resources>
+                <Image Grid.Row="0"
+                       Source="{Binding ImageSource}"/>
+                <Label Grid.Row="1"
+                       Text="{Binding Temperature, StringFormat='{0}C'}"/>
+                <Label Grid.Row="2"
+                       Text="{Binding RealTemperature, StringFormat='Real {0}C'}"/>
+                <Label Grid.Row="3"
+                       Text="{Binding Rain}"/>
+            </Grid>
         </controls:Expander.MainContent>
     </controls:Expander>
 </ContentView>

@@ -2,6 +2,7 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:WA_Front.Controls"
+             xmlns:apimodel="clr-namespace:WA_WeatherAPI.Model.Hourly;assembly=WA-WeatherAPI"
              x:Class="WA_Front.View.HourlyView">
     <ContentView.Resources>
         <Style TargetType="Label">
@@ -11,9 +12,11 @@
     <VerticalStackLayout BindableLayout.ItemsSource="{Binding HourlyWeather}" 
                          Spacing="5"
                          Padding="5">
+        <ActivityIndicator IsRunning="True"
+                           IsVisible="{Binding IsLoading}"/>
         <BindableLayout.ItemTemplate>
             <DataTemplate>
-                <Border>
+                <Border x:DataType="apimodel:HourlyDataModel">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="5"/>
                     </Border.StrokeShape>
@@ -22,20 +25,26 @@
                             <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
                         </controls:Expander.GestureRecognizers>
                         <controls:Expander.HeaderContent>
-                            <Grid ColumnDefinitions="Auto,*,*,*,6*"
+                            <Grid ColumnDefinitions="Auto,*,*,*,*,*,3*"
                                   RowDefinitions="50"
                                   BackgroundColor="#252247">
                                 <Image Grid.Column="0"
-                                       Source="{Binding ImageSource}"/>
+                                       Source="p50.png"/>
                                 <Label Grid.Column="1"
                                        BackgroundColor="#312D59"
-                                       Text="{Binding Temperature}"/>
+                                       Text="{Binding Time, StringFormat='{0:dd/MM HH:mm}'}"/>
                                 <Label Grid.Column="2"
                                        BackgroundColor="#2B2759"
-                                       Text="{Binding RealTemperature}"/>
+                                       Text="{Binding Temperature2M, StringFormat='{0}°C'}"/>
                                 <Label Grid.Column="3"
                                        BackgroundColor="#242057"
-                                       Text="{Binding Rain}"/>
+                                       Text="{Binding ApparentTemperature, StringFormat='Real {0}°C'}"/>
+                                <Label Grid.Column="4"
+                                       BackgroundColor="#312D59"
+                                       Text="{Binding Cloudcover}"/>
+                                <Label Grid.Column="5"
+                                       BackgroundColor="#2B2759"
+                                       Text="{Binding Visibility}"/>
                             </Grid>
                         </controls:Expander.HeaderContent>
                         <controls:Expander.MainContent>
@@ -44,13 +53,13 @@
                                   BackgroundColor="#252247">
                                 <Label Grid.Column="1"
                                        BackgroundColor="#312D59"
-                                       Text="Inne dane 1"/>
+                                       Text="{Binding Precipitation}"/>
                                 <Label Grid.Column="2"
                                        BackgroundColor="#2B2759"
-                                       Text="Inne dane 2"/>
+                                       Text="{Binding SurfacePressure}"/>
                                 <Label Grid.Column="3"
                                        BackgroundColor="#242057"
-                                       Text="Inne dane 3"/>
+                                       Text="{Binding Relativehumidity2M}"/>
                             </Grid>
                         </controls:Expander.MainContent>
                     </controls:Expander>

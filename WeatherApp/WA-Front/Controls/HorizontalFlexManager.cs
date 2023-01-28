@@ -1,6 +1,4 @@
-﻿using Microsoft.Maui.Layouts;
-
-namespace WA_Front.Controls;
+﻿namespace WA_Front.Controls;
 
 class HorizontalFlexManager : HorizontalStackLayoutManager
 {

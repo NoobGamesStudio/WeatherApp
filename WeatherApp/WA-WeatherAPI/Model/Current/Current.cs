@@ -30,5 +30,5 @@ public record CurrentWeather
     public long Weathercode { get; init; }
 
     [JsonPropertyName("time")]
-    public string? Time { get; init; }
+    public DateTime? Time { get; init; }
 }

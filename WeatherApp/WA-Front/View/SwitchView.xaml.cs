@@ -1,7 +1,3 @@
-using CommunityToolkit.Mvvm.ComponentModel;
-using System.Collections.ObjectModel;
-using WA_Front.ViewModel;
-
 namespace WA_Front.View;
 
 public partial class SwitchView : ContentView

@@ -1,6 +1,3 @@
-using WA_Front.Controls;
-using WA_Front.ViewModel;
-
 namespace WA_Front.View;
 
 public partial class HourlyView : ContentView

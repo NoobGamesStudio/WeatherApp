@@ -1,8 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System.Collections.ObjectModel;
-using WA_Front.Model;
-
-namespace WA_Front.ViewModel;
+﻿namespace WA_Front.ViewModel;
 
 [INotifyPropertyChanged]
 public partial class CurrentViewModel
@@ -16,11 +12,14 @@ public partial class CurrentViewModel
     };
 
     [ObservableProperty]
-    public CurrentWeatherModel currentWeather = new()
+    public CurrentWeather currentWeather;
+
+    public CurrentViewModel(Forecast forecast)
     {
-        Temperature = 0,
-        Rain = 0,
-        ImageSource = "sunny",
-        RealTemperature = 0,
-    };
+        Application.Current.Dispatcher.Dispatch(async () =>
+        {
+            var current = await forecast.Current().Unwrap();
+            CurrentWeather = current?.CurrentWeather;
+        });
+    }
 }

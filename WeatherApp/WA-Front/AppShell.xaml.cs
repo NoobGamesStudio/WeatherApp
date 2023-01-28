@@ -1,6 +1,4 @@
-﻿using WA_Front.View;
-
-namespace WA_Front;
+﻿namespace WA_Front;
 
 public partial class AppShell : Shell
 {

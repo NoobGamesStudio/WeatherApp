@@ -1,9 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using Microsoft.Maui.LifecycleEvents;
-using WA_Front.View;
-using WA_Front.ViewModel;
-
-namespace WA_Front;
+﻿namespace WA_Front;
 
 public static class MauiProgram
 {
@@ -40,8 +35,8 @@ public static class MauiProgram
         builder.Services.AddTransient<SwitchViewModel>();
 		builder.Services.AddTransient<MasterPage>();
 
-		builder.Services.AddSingleton<WA_Utility.Service.ExampleService>();
-		builder.Services.AddSingleton<WA_WeatherAPI.Service.ExampleService>();
+		builder.Services.AddSingleton<Forecast>();
+		builder.Services.AddSingleton<Localization>();
 
 		var app = builder.Build();
 		ServiceProvider = app.Services;

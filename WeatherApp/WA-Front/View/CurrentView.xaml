@@ -4,7 +4,6 @@
              x:Class="WA_Front.View.CurrentView"
              xmlns:model="clr-namespace:WA_Front.Model"
              xmlns:viewmodel="clr-namespace:WA_Front.ViewModel"
-             x:DataType="viewmodel:CurrentViewModel"
              BackgroundColor="#331144">
     <ContentView.Resources>
         <Style TargetType="Label">
@@ -25,26 +24,21 @@
                   x:Name="MainGrid">
                 <Label Grid.Row="0" 
                        Grid.Column="0"
-                       x:DataType="model:CurrentWeatherModel"
-                       Text="{Binding Temperature, StringFormat='{0}C'}"/>
+                       Text="{Binding Temperature, StringFormat='{0}°C'}"/>
                 <Image Grid.Row="0" 
                        Grid.Column="1"
                        Source="p50.png"
-                       Aspect="AspectFill"                     
-                       x:DataType="model:CurrentWeatherModel"/>
+                       Aspect="AspectFill"/>
                 <Label Grid.Row="1" 
                        Grid.Column="0"
-                       x:DataType="model:CurrentWeatherModel"
-                       Text="{Binding RealTemperature, StringFormat='{0} Real C'}"/>
+                       Text="{Binding Windspeed, StringFormat='Windspeed: {0}'}"/>
                 <Label Grid.Row="1" 
                        Grid.Column="1"
-                       x:DataType="model:CurrentWeatherModel"
-                       Text="{Binding Rain, StringFormat='{0}%'}"/>
-                <Label Grid.Row="2" 
-                       x:DataType="model:CurrentWeatherModel"
+                       Text="{Binding Winddirection, StringFormat='Winddirection: {0}°'}"/>
+                <Label Grid.Row="2"
                        Grid.ColumnSpan="2"
                        BackgroundColor="{x:StaticResource Highlight}"
-                       Text="wind"/>
+                       Text="{Binding Time, StringFormat='{0:dd/MM/yyyy H:mm}'}"/>
             </Grid>
         </Border>
 

@@ -20,7 +20,7 @@ public class Forecast
     public async Task<Task<Hourly?>> Hourly(string cityName = "Szczecin")
     {
         _localization.City = cityName;
-        return _client.GetFromJsonAsync<Hourly>($"{await CommonUriPart()}&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,precipitation,weathercode,surface_pressure,cloudcover,visibility");
+        return _client.GetFromJsonAsync<Hourly>($"{await CommonUriPart()}&start_date={DateTime.UtcNow.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)}&end_date={DateTime.UtcNow.AddDays(1).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)}&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,precipitation,weathercode,surface_pressure,cloudcover,visibility");
     }
 
     public async Task<Task<Daily?>> Daily(string cityName = "Szczecin")
@@ -28,7 +28,7 @@ public class Forecast
         _localization.City = cityName;
         (double lon, double lat) = (await _localization.Data())!;
 
-        return _client.GetFromJsonAsync<Daily>($"{await CommonUriPart()}&daily=weathercode,temperature_2m_max,temperature_2m_min,sunrise,sunset,precipitation_sum,precipitation_hours,windspeed_10m_max,windgusts_10m_max,winddirection_10m_dominant,shortwave_radiation_sum");
+        return _client.GetFromJsonAsync<Daily>($"{await CommonUriPart()}&start_date={DateTime.UtcNow.AddDays(-14).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)}&end_date={DateTime.UtcNow.AddDays(14).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)}&daily=weathercode,temperature_2m_max,temperature_2m_min,sunrise,sunset,precipitation_sum,precipitation_hours,windspeed_10m_max,windgusts_10m_max,winddirection_10m_dominant,shortwave_radiation_sum");
     }
 
     async Task<string> CommonUriPart()

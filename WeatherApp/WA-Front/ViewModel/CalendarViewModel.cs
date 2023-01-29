@@ -4,7 +4,7 @@
 public partial class CalendarViewModel
 {
     [ObservableProperty]
-    public ObservableCollection<DailyDataModel> dailyWeather = new();
+    public ObservableCollection<DailyModel> dailyWeather = new();
 
     [ObservableProperty]
     public bool isLoading = true;
@@ -15,7 +15,7 @@ public partial class CalendarViewModel
         {
             IsLoading = true;
             var daily = await forecast.Daily().Unwrap();
-            DailyWeather = new(daily?.Data?.Cast());
+            DailyWeather = new(daily?.Cast());
             IsLoading = false;
         });
     }

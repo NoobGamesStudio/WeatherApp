@@ -12,8 +12,8 @@
         </Style>
         <Color x:Key="Highlight">#8F89CF</Color>
     </ContentView.Resources>
-    <Grid RowDefinitions="330,150,Auto"
-          ColumnDefinitions="330"
+    <Grid RowDefinitions="350,150,Auto"
+          ColumnDefinitions="350"
           RowSpacing="10"
           Padding="10">
         <Border Grid.Row="0" 
@@ -31,7 +31,7 @@
                        Aspect="AspectFill"/>
                 <Label Grid.Row="1" 
                        Grid.Column="0"
-                       Text="{Binding Windspeed, StringFormat='Windspeed: {0}'}"/>
+                       Text="{Binding Windspeed, StringFormat='Windspeed: {0}kmh'}"/>
                 <Label Grid.Row="1" 
                        Grid.Column="1"
                        Text="{Binding Winddirection, StringFormat='Winddirection: {0}°'}"/>
@@ -54,26 +54,51 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:DayPartWeatherModel">
                         <Grid RowDefinitions="*,Auto,*" 
-                              ColumnDefinitions="Auto, *"
+                              ColumnDefinitions="Auto,*"
                               HeightRequest="{Binding Height, Source={x:Reference frame}}">
+                            <Grid.Resources>
+                                <Style TargetType="Label">
+                                    <Setter Property="Padding" Value="0"/>
+                                    <Setter Property="TextColor" Value="White"/>
+                                    <Setter Property="BackgroundColor" Value="#312D59"/>
+                                </Style>
+                            </Grid.Resources>
                             <Label Grid.Row="0" 
                                    Grid.ColumnSpan="2" 
                                    Text="{Binding Part}"/>
                             <Image Grid.Row="1" 
                                    Grid.Column="0" 
-                                   Source="p50.png"
+                                   Source="{Binding Data.Data.WeatherImage, StringFormat='p50.png'}"
                                    BackgroundColor="{x:StaticResource Highlight}"
                                    Aspect="AspectFill"/>
                             <Label Grid.Row="1" 
                                    Grid.Column="1" 
-                                   BackgroundColor="{x:StaticResource Highlight}"
-                                   Text="{Binding Temperature}"/>
+                                   BackgroundColor="{x:StaticResource Highlight}">
+                                <Label.Text>
+                                    <MultiBinding StringFormat="{}{0}{1}">
+                                        <Binding Path="Data.Data.Temperature2M"/>
+                                        <Binding Path="Data.Units.Temperature2M"/>
+                                    </MultiBinding>
+                                </Label.Text>
+                            </Label>
                             <Label Grid.Row="2" 
-                                   Grid.Column="0" 
-                                   Text="{Binding Rain}"/>
+                                   Grid.Column="0">
+                                <Label.Text>
+                                    <MultiBinding StringFormat="{}{0}{1}">
+                                        <Binding Path="Data.Data.Precipitation"/>
+                                        <Binding Path="Data.Units.Precipitation"/>
+                                    </MultiBinding>
+                                </Label.Text>
+                            </Label>
                             <Label Grid.Row="2" 
-                                   Grid.Column="1" 
-                                   Text="{Binding Temperature}"/>
+                                   Grid.Column="1">
+                                <Label.Text>
+                                    <MultiBinding StringFormat="R {0}{1}">
+                                        <Binding Path="Data.Data.ApparentTemperature"/>
+                                        <Binding Path="Data.Units.ApparentTemperature"/>
+                                    </MultiBinding>
+                                </Label.Text>
+                            </Label>
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
@@ -83,6 +108,8 @@
         <SearchBar Grid.Row="2" 
                    HorizontalOptions="FillAndExpand"
                    BackgroundColor="White"
-                   Placeholder="Miasto"/>
+                   SearchCommand="{Binding SearchCommand}"
+                   SearchCommandParameter="{Binding Text, Source={x:RelativeSource Self}}"
+                   Placeholder="{Binding City}"/>
     </Grid>
 </ContentView>

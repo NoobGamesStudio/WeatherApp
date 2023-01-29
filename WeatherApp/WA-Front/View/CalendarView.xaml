@@ -2,6 +2,9 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:WA_Front.Controls"
+             xmlns:apimodel="clr-namespace:WA_WeatherAPI.Model.Daily;assembly=WA-WeatherAPI"
+             xmlns:viewmodel="clr-namespace:WA_Front.ViewModel"
+             x:DataType="viewmodel:CalendarViewModel"
              x:Class="WA_Front.View.CalendarView">
     <ContentView.Resources>
         <Style TargetType="Label">
@@ -28,7 +31,9 @@
             </Setter>
         </Style>
     </ContentView.Resources>
-    <controls:Expander Orientation="Right" x:Name="test" VerticalOptions="FillAndExpand">
+    <controls:Expander Orientation="Right" 
+                       x:Name="expander" 
+                       VerticalOptions="FillAndExpand">
         <controls:Expander.HeaderContent>
             <controls:HorizontalFlexLayout Spacing="10"
                                            Padding="5"
@@ -36,7 +41,8 @@
                                            BindableLayout.ItemsSource="{Binding DailyWeather}">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
-                        <RadioButton IsChecked="{Binding IsExpanded, Source={x:Reference test}, Mode=OneWayToSource}">
+                        <RadioButton IsChecked="{Binding IsExpanded, Source={x:Reference expander}, Mode=OneWayToSource}"
+                                     x:DataType="apimodel:DailyModel">
                             <RadioButton.ControlTemplate>
                                 <ControlTemplate>
                                     <Border WidthRequest="150"
@@ -53,18 +59,30 @@
                                             </Grid.GestureRecognizers>
                                             <Image Grid.Row="0"
                                                    Grid.Column="0"
-                                                   Source="p50.png"/>
+                                                   Source="{Binding Data.WeatherImage, StringFormat='p50.png'}"/>
                                             <Label Grid.Row="0"
                                                    Grid.Column="1"
-                                                   Text="{Binding Time, StringFormat='{0:dd/MM/yyyy}'}"/>
+                                                   Text="{Binding Data.Time, StringFormat='{0:dd/MM/yyyy}'}"/>
                                             <Label Grid.Row="1"
                                                    Grid.Column="0"
-                                                   BackgroundColor="#312D59"
-                                                   Text="{Binding Temperature2MMin, StringFormat='Min: {0}°C'}"/>
+                                                   BackgroundColor="#312D59">
+                                                <Label.Text>
+                                                    <MultiBinding StringFormat="Min: {0}{1}">
+                                                        <Binding Path="Data.Temperature2MMin"/>
+                                                        <Binding Path="Units.Temperature2MMin"/>
+                                                    </MultiBinding>
+                                                </Label.Text>
+                                            </Label>
                                             <Label Grid.Row="1"
                                                    Grid.Column="1"
-                                                   BackgroundColor="#312D59"
-                                                   Text="{Binding Temperature2MMax, StringFormat='Max: {0}°C'}"/>
+                                                   BackgroundColor="#312D59">
+                                                <Label.Text>
+                                                    <MultiBinding StringFormat="Max: {0}{1}">
+                                                        <Binding Path="Data.Temperature2MMax"/>
+                                                        <Binding Path="Units.Temperature2MMax"/>
+                                                    </MultiBinding>
+                                                </Label.Text>
+                                            </Label>
                                         </Grid>
                                     </Border>
                                 </ControlTemplate>
@@ -79,6 +97,7 @@
                   BackgroundColor="{x:StaticResource Primary}"
                   Padding="5"
                   RowSpacing="5"
+                  x:DataType="apimodel:DailyModel"
                   x:Name="Content">
                 <Grid.Resources>
                     <Style TargetType="Label">
@@ -87,27 +106,85 @@
                     </Style>
                 </Grid.Resources>
                 <Image Grid.Row="0"
-                       Source="p50.png"/>
-                <Label Grid.Row="1"
-                       Text="{Binding Temperature2MMin, StringFormat='Min: {0}°C'}"/>
-                <Label Grid.Row="2"
-                       Text="{Binding Temperature2MMax, StringFormat='Max: {0}°C'}"/>
-                <Label Grid.Row="3"
-                       Text="{Binding Sunrise, StringFormat='Sunrise: {0}'}"/>
-                <Label Grid.Row="4"
-                       Text="{Binding Sunset, StringFormat='Sunset: {0}'}"/>
-                <Label Grid.Row="5"
-                       Text="{Binding PrecipitationSum, StringFormat='PrecipationSum: {0}'}"/>
-                <Label Grid.Row="6"
-                       Text="{Binding PrecipitationHours, StringFormat='PrecipationHours: {0}'}"/>
-                <Label Grid.Row="7"
-                       Text="{Binding Windspeed10MMax, StringFormat='WindspeedMax: {0}'}"/>
-                <Label Grid.Row="8"
-                       Text="{Binding Windgusts10MMax, StringFormat='WindgustsMax: {0}'}"/>
-                <Label Grid.Row="9"
-                       Text="{Binding Winddirection10MDominant, StringFormat='Dominantwinddirection: {0}°'}"/>
-                <Label Grid.Row="10"
-                       Text="{Binding ShortwaveRadiationSum, StringFormat='ShortwaveRadiationSum: {0}'}"/>
+                       Source="{Binding Data.WeatherImage, StringFormat='p50.png'}"/>
+                <Label Grid.Row="1">
+                    <Label.Text>
+                        <MultiBinding StringFormat="Min: {0}{1}">
+                            <Binding Path="Data.Temperature2MMin"/>
+                            <Binding Path="Units.Temperature2MMin"/>
+                        </MultiBinding>
+                    </Label.Text>
+                </Label>
+                <Label Grid.Row="2">
+                    <Label.Text>
+                        <MultiBinding StringFormat="Max: {0}{1}">
+                            <Binding Path="Data.Temperature2MMax"/>
+                            <Binding Path="Units.Temperature2MMax"/>
+                        </MultiBinding>
+                    </Label.Text>
+                </Label>
+                <Label Grid.Row="3">
+                    <Label.Text>
+                        <MultiBinding StringFormat="Sunrise: {0}">
+                            <Binding Path="Data.Sunrise"/>
+                        </MultiBinding>
+                    </Label.Text>
+                </Label>
+                <Label Grid.Row="4">
+                    <Label.Text>
+                        <MultiBinding StringFormat="Sunset: {0}">
+                            <Binding Path="Data.Sunset"/>
+                        </MultiBinding>
+                    </Label.Text>
+                </Label>
+                <Label Grid.Row="5">
+                    <Label.Text>
+                        <MultiBinding StringFormat="PrecipitationSum: {0}{1}">
+                            <Binding Path="Data.PrecipitationSum"/>
+                            <Binding Path="Units.PrecipitationSum"/>
+                        </MultiBinding>
+                    </Label.Text>
+                </Label>
+                <Label Grid.Row="6">
+                    <Label.Text>
+                        <MultiBinding StringFormat="PrecipitationHours: {0}{1}">
+                            <Binding Path="Data.PrecipitationHours"/>
+                            <Binding Path="Units.PrecipitationHours"/>
+                        </MultiBinding>
+                    </Label.Text>
+                </Label>
+                <Label Grid.Row="7">
+                    <Label.Text>
+                        <MultiBinding StringFormat="Windspeed10MMax: {0}{1}">
+                            <Binding Path="Data.Windspeed10MMax"/>
+                            <Binding Path="Units.Windspeed10MMax"/>
+                        </MultiBinding>
+                    </Label.Text>
+                </Label>
+                <Label Grid.Row="8">
+                    <Label.Text>
+                        <MultiBinding StringFormat="Windgusts10MMax: {0}{1}">
+                            <Binding Path="Data.Windgusts10MMax"/>
+                            <Binding Path="Units.Windgusts10MMax"/>
+                        </MultiBinding>
+                    </Label.Text>
+                </Label>
+                <Label Grid.Row="9">
+                    <Label.Text>
+                        <MultiBinding StringFormat="Winddirection10MDominant: {0}{1}">
+                            <Binding Path="Data.Winddirection10MDominant"/>
+                            <Binding Path="Units.Winddirection10MDominant"/>
+                        </MultiBinding>
+                    </Label.Text>
+                </Label>
+                <Label Grid.Row="10">
+                    <Label.Text>
+                        <MultiBinding StringFormat="ShortwaveRadiationSum: {0}{1}">
+                            <Binding Path="Data.ShortwaveRadiationSum"/>
+                            <Binding Path="Units.ShortwaveRadiationSum"/>
+                        </MultiBinding>
+                    </Label.Text>
+                </Label>
             </Grid>
         </controls:Expander.MainContent>
     </controls:Expander>

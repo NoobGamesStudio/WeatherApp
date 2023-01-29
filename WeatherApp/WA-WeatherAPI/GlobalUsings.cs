@@ -9,6 +9,7 @@ global using System.Text;
 global using WA_WeatherAPI.Model.Current;
 global using WA_WeatherAPI.Model.Hourly;
 global using WA_WeatherAPI.Model.Daily;
+global using WA_WeatherAPI.Model.Converters;
 global using WA_WeatherAPI.Interface;
 
 //Julka

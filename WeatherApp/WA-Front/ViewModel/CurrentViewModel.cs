@@ -1,25 +1,58 @@
 ﻿namespace WA_Front.ViewModel;
 
-[INotifyPropertyChanged]
-public partial class CurrentViewModel
+public partial class CurrentViewModel : ObservableObject
 {
     [ObservableProperty]
-    public ObservableCollection<DayPartWeatherModel> dayPartWeather = new()
-    {
-        new DayPartWeatherModel() { Part="Morning", Temperature = 8, Rain = 80, ImageSource = "rainy", RealTemperature = 4 },
-        new DayPartWeatherModel() { Part="Afternoon", Temperature = 7, Rain = 8, ImageSource = "sunny", RealTemperature = 10 },
-        new DayPartWeatherModel() { Part="Night", Temperature = 6, Rain = 18, ImageSource = "cloudy", RealTemperature = 5 },
-    };
+    public ObservableCollection<DayPartWeatherModel> dayPartWeather = new();
 
     [ObservableProperty]
     public CurrentWeather currentWeather;
 
+    Forecast _forecast;
+
+    [ObservableProperty]
+    public string city;
+
     public CurrentViewModel(Forecast forecast)
     {
-        Application.Current.Dispatcher.Dispatch(async () =>
-        {
-            var current = await forecast.Current().Unwrap();
-            CurrentWeather = current?.CurrentWeather;
-        });
+        _forecast = forecast;
+        GetCurrent();
+        GetPart();
+    }
+
+    void GetCurrent() => Application.Current.Dispatcher.Dispatch(async () =>
+    {
+        var current = await _forecast.Current().Unwrap();
+        CurrentWeather = current?.CurrentWeather;
+    });
+
+    void GetPart() => Application.Current.Dispatcher.Dispatch(async () =>
+    {
+        var period = await _forecast.Hourly().Unwrap();
+        period?.Cast()
+            .SkipWhile(p => p.Data.Time < DateTime.UtcNow)
+            .Where((p, i) => i % 6 == 0)
+            .Take(3)
+            .Select(p => new DayPartWeatherModel
+            {
+                Part = p.Data.Time?.Hour switch
+                {
+                    < 6 => "Noon",
+                    < 12 => "Morning",
+                    < 18 => "Afternoon",
+                    _ => "Night"
+                },
+                Data = p
+            }).ToList().ForEach(e => DayPartWeather.Add(e));
+        City = _forecast.City;
+    });
+
+    [RelayCommand]
+    async Task Search(string parameter)
+    {
+        _forecast.City = parameter;
+        GC.Collect();
+        await Shell.Current.GoToAsync(nameof(MasterPage), false);
+        var page = Shell.Current.CurrentPage;
     }
 }

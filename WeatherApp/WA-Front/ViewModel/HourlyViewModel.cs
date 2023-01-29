@@ -4,7 +4,7 @@
 public partial class HourlyViewModel
 {
     [ObservableProperty]
-    public ObservableCollection<HourlyDataModel> hourlyWeather;
+    public ObservableCollection<HourlyModel> hourlyWeather;
 
     [ObservableProperty]
     public bool isLoading = true;
@@ -15,7 +15,7 @@ public partial class HourlyViewModel
         {
             IsLoading = true;
             var hourly = await forecast.Hourly().Unwrap();
-            HourlyWeather = new(hourly?.Data?.Cast());
+            HourlyWeather = new(hourly?.Cast());
             IsLoading = false;
         });
     }

@@ -11,12 +11,30 @@ public partial class CalendarViewModel
 
     public CalendarViewModel(Forecast forecast)
     {
-        Application.Current.Dispatcher.Dispatch(async () =>
-        {
-            IsLoading = true;
-            var daily = await forecast.Daily().Unwrap();
-            DailyWeather = new(daily?.Cast());
-            IsLoading = false;
-        });
+        Task.Run(() => GetData(forecast, new() { { "City", "Szczecin" } }));
+        WeakReferenceMessenger.Default
+            .Register<CalendarViewModel, string, string>(
+                this, 
+                nameof(MessageChannels.Refresh), 
+                (r, o) => r.GetData(forecast, new() {{ "City", o }}));
     }
+
+    void GetData(Forecast forecast, Dictionary<string, object> parameters) => Application.Current.Dispatcher.DispatchAsync(async () =>
+    {
+        Daily daily;
+        IsLoading = true;
+        DailyWeather.Clear();
+        GC.Collect();
+        if (parameters.TryGetValue("City", out object city))
+        {
+            daily = await forecast.Daily(city as string);
+        }
+        else
+        {
+            daily = await forecast.Daily();
+        }
+        daily?.Cast()
+            .ForEach(d => DailyWeather.Add(d));
+        IsLoading = false;
+    });
 }

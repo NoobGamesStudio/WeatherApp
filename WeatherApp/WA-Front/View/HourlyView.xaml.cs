@@ -12,7 +12,9 @@ public partial class HourlyView : ContentView
 
     private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
     {
-		Expander expander = sender as Expander;
-		expander.IsExpanded = !expander.IsExpanded;
+		if(sender is Expander expander)
+		{
+			expander.IsExpanded = !expander.IsExpanded;
+		}
     }
 }

@@ -1,6 +1,7 @@
 ﻿namespace WA_Front.ViewModel;
 
-public partial class CurrentViewModel : ObservableObject
+[INotifyPropertyChanged]
+public partial class CurrentViewModel
 {
     [ObservableProperty]
     public ObservableCollection<DayPartWeatherModel> dayPartWeather = new();
@@ -8,27 +9,54 @@ public partial class CurrentViewModel : ObservableObject
     [ObservableProperty]
     public CurrentWeather currentWeather;
 
-    Forecast _forecast;
-
     [ObservableProperty]
     public string city;
 
     public CurrentViewModel(Forecast forecast)
     {
-        _forecast = forecast;
-        GetCurrent();
-        GetPart();
+        Task.Run(() => GetData(forecast, new() {{ "City", "Szczecin" }}));
+
+        WeakReferenceMessenger.Default
+            .Register<CurrentViewModel, string, string>(
+                this, 
+                nameof(MessageChannels.Refresh), 
+                (r, o) => r.GetData(forecast, new() {{ "City", o }}));
     }
 
-    void GetCurrent() => Application.Current.Dispatcher.Dispatch(async () =>
+    void GetData(Forecast forecast, Dictionary<string, object> parameters) => Application.Current.Dispatcher.DispatchAsync(async () =>
     {
-        var current = await _forecast.Current().Unwrap();
-        CurrentWeather = current?.CurrentWeather;
+        await GetCurrent(forecast, parameters);
+        await GetPart(forecast, parameters);
     });
 
-    void GetPart() => Application.Current.Dispatcher.Dispatch(async () =>
+    async Task GetCurrent(Forecast forecast, Dictionary<string, object> parameters)
     {
-        var period = await _forecast.Hourly().Unwrap();
+        Current current;
+        if (parameters.TryGetValue("City", out object city))
+        {
+            current = await forecast.Current(city as string);
+        }
+        else
+        {
+            current = await forecast.Current();
+        }
+        CurrentWeather = current?.CurrentWeather;
+    }
+
+    async Task GetPart(Forecast forecast, Dictionary<string, object> parameters)
+    {
+        Hourly period;
+        if (parameters.TryGetValue("City", out object city))
+        {
+            period = await forecast.Hourly(city as string);
+        }
+        else
+        {
+            period = await forecast.Hourly();
+        }
+
+        DayPartWeather.Clear();
+        GC.Collect();
         period?.Cast()
             .SkipWhile(p => p.Data.Time < DateTime.UtcNow)
             .Where((p, i) => i % 6 == 0)
@@ -43,16 +71,15 @@ public partial class CurrentViewModel : ObservableObject
                     _ => "Night"
                 },
                 Data = p
-            }).ToList().ForEach(e => DayPartWeather.Add(e));
-        City = _forecast.City;
-    });
+            })
+            .ToList()
+            .ForEach(p => DayPartWeather.Add(p));
+        City = forecast.City;
+    }
 
     [RelayCommand]
-    async Task Search(string parameter)
+    void Search(string parameter)
     {
-        _forecast.City = parameter;
-        GC.Collect();
-        await Shell.Current.GoToAsync(nameof(MasterPage), false);
-        var page = Shell.Current.CurrentPage;
+        WeakReferenceMessenger.Default.Send(parameter, nameof(MessageChannels.Refresh));
     }
 }

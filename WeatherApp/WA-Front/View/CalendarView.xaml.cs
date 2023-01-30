@@ -14,14 +14,16 @@ public partial class CalendarView : ContentView
 
     private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
     {
-        RadioButton button = e.Parameter as RadioButton;
-		Content.BindingContext = button.BindingContext;
-
-        if (selected == button)
+		if(e.Parameter is RadioButton button)
 		{
-			button.IsChecked = !button.IsChecked;
-		}
-	
-        selected = button.IsChecked ? button : null;
+            Content.BindingContext = button.BindingContext;
+
+            if (selected == button)
+            {
+                button.IsChecked = !button.IsChecked;
+            }
+
+            selected = button.IsChecked ? button : null;
+        }
     }
 }

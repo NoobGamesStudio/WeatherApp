@@ -15,6 +15,7 @@ global using WA_Front.View;
 global using WA_Front.ViewModel;
 global using WA_Front.Model;
 global using WA_Front.Controls;
+global using WA_Front.Enums;
 
 // Daniel
 global using WA_WeatherAPI.Service;

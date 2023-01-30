@@ -11,6 +11,11 @@ public partial class SwitchView : ContentView
 
     private void RadioButton_CheckedChanged(object sender, CheckedChangedEventArgs e)
     {
-		(BindingContext as SwitchViewModel).Switch((sender as RadioButton).BindingContext as ContentView);
+		if(BindingContext is SwitchViewModel viewModel && 
+			sender is RadioButton radioButton &&
+			radioButton.BindingContext is ContentView view) 
+		{
+			viewModel.Switch(view);
+		}
     }
 }

@@ -28,12 +28,12 @@ public static class MauiProgram
 #if DEBUG
 		builder.Logging.AddDebug();
 #endif
-        builder.Services.AddTransient<MasterPageModel>();
-        builder.Services.AddTransient<CalendarViewModel>();
-        builder.Services.AddTransient<CurrentViewModel>();
-        builder.Services.AddTransient<HourlyViewModel>();
-        builder.Services.AddTransient<SwitchViewModel>();
-		builder.Services.AddTransient<MasterPage>();
+        builder.Services.AddSingleton<MasterPageModel>();
+        builder.Services.AddSingleton<CalendarViewModel>();
+        builder.Services.AddSingleton<CurrentViewModel>();
+        builder.Services.AddSingleton<HourlyViewModel>();
+        builder.Services.AddSingleton<SwitchViewModel>();
+		builder.Services.AddSingleton<MasterPage>();
 
 		builder.Services.AddSingleton<Forecast>();
 		builder.Services.AddSingleton<Localization>();

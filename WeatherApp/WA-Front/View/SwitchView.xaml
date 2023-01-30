@@ -4,15 +4,14 @@
              xmlns:view="clr-namespace:WA_Front.View"
              xmlns:viewmodel="clr-namespace:WA_Front.ViewModel"
              x:DataType="viewmodel:SwitchViewModel"
-             x:Class="WA_Front.View.SwitchView"
-             x:Name="this">
+             x:Class="WA_Front.View.SwitchView">
     <Grid ColumnDefinitions="*,Auto">
         <ScrollView Grid.Column="0">
             <ContentView Content="{Binding ChosenModel}"/>
         </ScrollView>
         <ScrollView Grid.Column="1">
             <VerticalStackLayout BindableLayout.ItemsSource="{Binding Models}"
-                                 BackgroundColor="{x:StaticResource White}"
+                                 BackgroundColor="{StaticResource Primary}"
                                  x:Name="Buttons">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
@@ -21,7 +20,8 @@
                                      CheckedChanged="RadioButton_CheckedChanged">
                             <RadioButton.ControlTemplate>
                                 <ControlTemplate>
-                                    <Label Text="{TemplateBinding BindingContext}"/>
+                                    <Label Text="{TemplateBinding BindingContext}"
+                                           Style="{StaticResource SwitchLabel}"/>
                                 </ControlTemplate>
                             </RadioButton.ControlTemplate>
                         </RadioButton>

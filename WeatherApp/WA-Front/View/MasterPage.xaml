@@ -4,8 +4,7 @@
              xmlns:view="clr-namespace:WA_Front.View"
              xmlns:service="clr-namespace:WA_Front.Service"
              x:Class="WA_Front.View.MasterPage">
-    <Grid ColumnDefinitions="Auto,*"
-          x:Name="Grid">
+    <Grid ColumnDefinitions="Auto,*">
         <view:CurrentView Grid.Column="0"/>
         <view:SwitchView Grid.Column="1"/>
     </Grid>

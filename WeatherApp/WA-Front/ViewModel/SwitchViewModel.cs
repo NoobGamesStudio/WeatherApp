@@ -7,7 +7,7 @@ public partial class SwitchViewModel
     public ObservableCollection<ContentView> models = new()
     {
         new HourlyView(),
-        new CalendarView()
+        new CalendarView(),
     };
 
     [ObservableProperty]

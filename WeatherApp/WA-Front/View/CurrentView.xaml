@@ -4,46 +4,49 @@
              x:Class="WA_Front.View.CurrentView"
              xmlns:model="clr-namespace:WA_Front.Model"
              xmlns:viewmodel="clr-namespace:WA_Front.ViewModel"
-             BackgroundColor="#331144">
-    <ContentView.Resources>
-        <Style TargetType="Label">
-            <Setter Property="TextColor" Value="White"/>
-            <Setter Property="BackgroundColor" Value="#312D59"/>
-        </Style>
-        <Color x:Key="Highlight">#8F89CF</Color>
-    </ContentView.Resources>
+             BackgroundColor="{StaticResource Primary}">
     <Grid RowDefinitions="350,150,Auto"
           ColumnDefinitions="350"
-          RowSpacing="10"
-          Padding="10">
-        <Border Grid.Row="0" 
-                BackgroundColor="White">
+          RowSpacing="5"
+          Padding="5">
+        <Border Grid.Row="0">
             <Grid RowDefinitions="2*,*,*" 
                   ColumnDefinitions="*,*"
+                  BackgroundColor="{StaticResource Secondary}"
                   BindingContext="{Binding CurrentWeather}"
                   x:Name="MainGrid">
                 <Label Grid.Row="0" 
                        Grid.Column="0"
+                       Style="{StaticResource SecondaryAccentLabel}"
+                       FontSize="48"
                        Text="{Binding Temperature, StringFormat='{0}°C'}"/>
                 <Image Grid.Row="0" 
                        Grid.Column="1"
                        Source="p50.png"
                        Aspect="AspectFill"/>
+                <BoxView Grid.Row="0"
+                         Grid.ColumnSpan="2"
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="End"
+                         HeightRequest="5"
+                         Color="{StaticResource Accent}"/>
                 <Label Grid.Row="1" 
                        Grid.Column="0"
+                       Style="{StaticResource SecondaryLabel}"
                        Text="{Binding Windspeed, StringFormat='Windspeed: {0}kmh'}"/>
                 <Label Grid.Row="1" 
                        Grid.Column="1"
+                       Style="{StaticResource SecondaryLabel}"
                        Text="{Binding Winddirection, StringFormat='Winddirection: {0}°'}"/>
                 <Label Grid.Row="2"
                        Grid.ColumnSpan="2"
-                       BackgroundColor="{x:StaticResource Highlight}"
+                       FontSize="24"
+                       Style="{StaticResource AccentLabel}"
                        Text="{Binding Time, StringFormat='{0:dd/MM/yyyy H:mm}'}"/>
             </Grid>
         </Border>
 
-        <Border Grid.Row="1"  
-                BackgroundColor="White">
+        <Border Grid.Row="1">
             <CollectionView ItemsSource="{Binding DayPartWeather}"
                             x:Name="frame" 
                             IsEnabled="False">
@@ -55,25 +58,22 @@
                     <DataTemplate x:DataType="model:DayPartWeatherModel">
                         <Grid RowDefinitions="*,Auto,*" 
                               ColumnDefinitions="Auto,*"
+                              BackgroundColor="{StaticResource Secondary}"
                               HeightRequest="{Binding Height, Source={x:Reference frame}}">
-                            <Grid.Resources>
-                                <Style TargetType="Label">
-                                    <Setter Property="Padding" Value="0"/>
-                                    <Setter Property="TextColor" Value="White"/>
-                                    <Setter Property="BackgroundColor" Value="#312D59"/>
-                                </Style>
-                            </Grid.Resources>
                             <Label Grid.Row="0" 
                                    Grid.ColumnSpan="2" 
+                                   Style="{StaticResource SecondaryLabel}"
+                                   Padding="0"
                                    Text="{Binding Part}"/>
                             <Image Grid.Row="1" 
                                    Grid.Column="0" 
                                    Source="{Binding Data.Data.WeatherImage, StringFormat='p50.png'}"
-                                   BackgroundColor="{x:StaticResource Highlight}"
-                                   Aspect="AspectFill"/>
+                                   BackgroundColor="{StaticResource Accent}"
+                                   Aspect="Center"/>
                             <Label Grid.Row="1" 
                                    Grid.Column="1" 
-                                   BackgroundColor="{x:StaticResource Highlight}">
+                                   Style="{StaticResource AccentLabel}"
+                                   Padding="0">
                                 <Label.Text>
                                     <MultiBinding StringFormat="{}{0}{1}">
                                         <Binding Path="Data.Data.Temperature2M"/>
@@ -82,7 +82,9 @@
                                 </Label.Text>
                             </Label>
                             <Label Grid.Row="2" 
-                                   Grid.Column="0">
+                                   Grid.Column="0"
+                                   Style="{StaticResource SecondaryLabel}"
+                                   Padding="0">
                                 <Label.Text>
                                     <MultiBinding StringFormat="{}{0}{1}">
                                         <Binding Path="Data.Data.Precipitation"/>
@@ -91,7 +93,9 @@
                                 </Label.Text>
                             </Label>
                             <Label Grid.Row="2" 
-                                   Grid.Column="1">
+                                   Grid.Column="1"
+                                   Style="{StaticResource SecondaryLabel}"
+                                   Padding="0">
                                 <Label.Text>
                                     <MultiBinding StringFormat="R {0}{1}">
                                         <Binding Path="Data.Data.ApparentTemperature"/>
@@ -107,7 +111,7 @@
 
         <SearchBar Grid.Row="2" 
                    HorizontalOptions="FillAndExpand"
-                   BackgroundColor="White"
+                   Style="{StaticResource CitySearchbar}"
                    SearchCommand="{Binding SearchCommand}"
                    SearchCommandParameter="{Binding Text, Source={x:RelativeSource Self}}"
                    Placeholder="{Binding City}"/>

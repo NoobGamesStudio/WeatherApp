@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="100mm"
+   height="100mm"
+   viewBox="0 0 100 100"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+   sodipodi:docname="Hourly_light.svg">
+  <defs
+     id="defs2">
+    <marker
+       inkscape:stockid="DotS"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="DotS"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path5808"
+         d="M -2.5,-1.0 C -2.5,1.7600000 -4.7400000,4.0 -7.5,4.0 C -10.260000,4.0 -12.5,1.7600000 -12.5,-1.0 C -12.5,-3.7600000 -10.260000,-6.0 -7.5,-6.0 C -4.7400000,-6.0 -2.5,-3.7600000 -2.5,-1.0 z "
+         style="fill-rule:evenodd;stroke:#4b4b4b;stroke-width:1pt;stroke-opacity:1;fill:#4b4b4b;fill-opacity:1"
+         transform="scale(0.2) translate(7.4, 1)" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="-109.5492"
+     inkscape:cy="232.00521"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-197)">
+    <circle
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#797979;stroke-width:4.93389177;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
+       id="path1904"
+       cx="50"
+       cy="247"
+       r="46.900024" />
+    <circle
+       style="opacity:1;fill:#4b4b4b;fill-opacity:1;stroke:#4b4b4b;stroke-width:3.45372415;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
+       id="path5669"
+       cx="50"
+       cy="247"
+       r="5.5014358" />
+    <path
+       style="fill:#4b4b4b;fill-opacity:1;stroke:#797979;stroke-width:3.41143537;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 49.91596,244.11623 c 0.377994,-3.51387 0,-39.32173 0,-39.32173"
+       id="path5671"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:#4b4b4b;fill-opacity:1;stroke:#797979;stroke-width:3.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 52.250092,248.16733 c 1.766037,1.37936 21.508769,12.96647 21.508769,12.96647"
+       id="path5671-1"
+       inkscape:connector-curvature="0" />
+    <ellipse
+       style="opacity:1;fill:#797979;fill-opacity:1;stroke:#797979;stroke-width:2.30982804;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
+       id="path5669-0"
+       cx="50"
+       cy="247"
+       rx="7.1714883"
+       ry="6.9399834" />
+    <ellipse
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#797979;stroke-width:2.20000005;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:2.2, 17.60000000000000142;stroke-dashoffset:22;stroke-opacity:1;paint-order:normal"
+       id="path5739"
+       cx="66.28302"
+       cy="243.13692"
+       rx="38.716675"
+       ry="37.488251"
+       transform="rotate(3.8054904)" />
+  </g>
+</svg>

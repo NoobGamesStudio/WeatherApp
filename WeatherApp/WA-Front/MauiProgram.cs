@@ -1,11 +1,10 @@
-﻿using Microsoft.Extensions.Logging;
-using WA_Front.View;
-
-namespace WA_Front;
+﻿namespace WA_Front;
 
 public static class MauiProgram
 {
-	public static MauiApp CreateMauiApp()
+    public static IServiceProvider ServiceProvider;
+
+    public static MauiApp CreateMauiApp()
 	{
 		var builder = MauiApp.CreateBuilder();
 		builder
@@ -14,14 +13,34 @@ public static class MauiProgram
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-			});
-
+			})
+			.ConfigureLifecycleEvents(events =>
+			{
+#if WINDOWS
+				events.AddWindows(windows => 
+					windows.OnWindowCreated((window) => 
+					{
+						//window.ExtendsContentIntoTitleBar = false;
+					})
+				);
+#endif
+            });
 #if DEBUG
 		builder.Logging.AddDebug();
 #endif
-		builder.Services.AddSingleton<MainPage>();
-		builder.Services.AddSingleton<WA_Utility.Service.ExampleService>();
-		builder.Services.AddSingleton<WA_WeatherAPI.Service.ExampleService>();
-		return builder.Build();
+        builder.Services.AddSingleton<MasterPageModel>();
+        builder.Services.AddSingleton<CalendarViewModel>();
+        builder.Services.AddSingleton<CurrentViewModel>();
+        builder.Services.AddSingleton<HourlyViewModel>();
+        builder.Services.AddSingleton<SwitchViewModel>();
+		builder.Services.AddSingleton<MasterPage>();
+
+		builder.Services.AddSingleton<Forecast>();
+		builder.Services.AddSingleton<Localization>();
+
+		var app = builder.Build();
+		ServiceProvider = app.Services;
+
+        return app;
 	}
 }

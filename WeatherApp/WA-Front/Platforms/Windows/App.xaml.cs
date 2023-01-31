@@ -1,7 +1,11 @@
-﻿using Microsoft.UI.Xaml;
-
-// To learn more about WinUI, the WinUI project structure,
+﻿// To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
+
+using Microsoft.UI;
+using Microsoft.UI.Windowing;
+using Microsoft.UI.Xaml;
+using WinRT.Interop;
+using AppWindow = Microsoft.UI.Windowing.AppWindow;
 
 namespace WA_Front.WinUI;
 
@@ -15,10 +19,25 @@ public partial class App : MauiWinUIApplication
 	/// executed, and as such is the logical equivalent of main() or WinMain().
 	/// </summary>
 	public App()
-	{
+    {
 		this.InitializeComponent();
-	}
+    }
 
 	protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
+
+    protected override void OnLaunched(LaunchActivatedEventArgs args)
+    {
+        base.OnLaunched(args);
+        var AppWindow = GetAppWindowForCurrentWindow();
+        AppWindow.Title = "App title";
+        var presenter = AppWindow.Presenter as OverlappedPresenter;
+    }
+
+    private AppWindow GetAppWindowForCurrentWindow()
+    {
+        IntPtr hWnd = WindowNative.GetWindowHandle(Application.Windows[0].Handler.PlatformView);
+        WindowId wndId = Win32Interop.GetWindowIdFromWindow(hWnd);
+        return AppWindow.GetFromWindowId(wndId);
+    }
 }
 

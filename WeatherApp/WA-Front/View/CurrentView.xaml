@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="WA_Front.View.CurrentView"
+             xmlns:apimodelC="clr-namespace:WA_WeatherAPI.Model.Current;assembly=WA-WeatherAPI"
+             xmlns:apimodelH="clr-namespace:WA_WeatherAPI.Model.Hourly;assembly=WA-WeatherAPI"
+             xmlns:model="clr-namespace:WA_Front.Model"
+             xmlns:viewmodel="clr-namespace:WA_Front.ViewModel"
+             x:DataType="{x:Type viewmodel:CurrentViewModel}"
+             BackgroundColor="{StaticResource Primary}">
+    <Grid RowDefinitions="350,150,Auto"
+          ColumnDefinitions="350"
+          RowSpacing="5"
+          Padding="5">
+        <Border Grid.Row="0"
+                BindingContext="{Binding CurrentWeather}">
+            <Grid RowDefinitions="2*,*,*" 
+                  ColumnDefinitions="*,*"
+                  x:DataType="{x:Type apimodelC:CurrentWeather}"
+                  BackgroundColor="{StaticResource Secondary}">
+                <Label Grid.Row="0" 
+                       Grid.Column="0"
+                       Style="{StaticResource SecondaryAccentLabel}"
+                       FontSize="48"
+                       Text="{Binding Temperature, StringFormat='{0}°C'}"/>
+                <Image Grid.Row="0" 
+                       Grid.Column="1"
+                       Source="p50.png"
+                       Aspect="AspectFill"/>
+                <BoxView Grid.Row="0"
+                         Grid.ColumnSpan="2"
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="End"
+                         HeightRequest="5"
+                         Color="{StaticResource Accent}"/>
+                <Label Grid.Row="1" 
+                       Grid.Column="0"
+                       Style="{StaticResource SecondaryLabel}"
+                       Text="{Binding Windspeed, StringFormat='Windspeed: {0}kmh'}"/>
+                <Label Grid.Row="1" 
+                       Grid.Column="1"
+                       Style="{StaticResource SecondaryLabel}"
+                       Text="{Binding Winddirection, StringFormat='Winddirection: {0}°'}"/>
+                <Label Grid.Row="2"
+                       Grid.ColumnSpan="2"
+                       FontSize="24"
+                       Style="{StaticResource AccentLabel}"
+                       Text="{Binding Time, StringFormat='{0:dd/MM/yyyy H:mm}'}"/>
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="1">
+            <CollectionView ItemsSource="{Binding DayPartWeather}"
+                            x:Name="frame" 
+                            IsEnabled="False">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" 
+                                     Span="3"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:DayPartWeatherModel">
+                        <Grid RowDefinitions="*,Auto,*" 
+                              ColumnDefinitions="Auto,*"
+                              BackgroundColor="{StaticResource Secondary}"
+                              HeightRequest="{Binding Height, Source={x:Reference frame}}">
+                            <Label Grid.Row="0" 
+                                   Grid.ColumnSpan="2" 
+                                   Style="{StaticResource SecondaryLabel}"
+                                   Padding="0"
+                                   Text="{Binding Part}"/>
+                            <Image Grid.Row="1" 
+                                   Grid.Column="0" 
+                                   Source="{Binding Data.Data.WeatherImage, StringFormat='p50.png'}"
+                                   BackgroundColor="{StaticResource Accent}"
+                                   Aspect="Center"/>
+                            <Label Grid.Row="1" 
+                                   Grid.Column="1" 
+                                   Style="{StaticResource AccentLabel}"
+                                   Padding="0">
+                                <Label.Text>
+                                    <MultiBinding StringFormat="{}{0}{1}">
+                                        <Binding Path="Data.Data.Temperature2M"/>
+                                        <Binding Path="Data.Units.Temperature2M"/>
+                                    </MultiBinding>
+                                </Label.Text>
+                            </Label>
+                            <Label Grid.Row="2" 
+                                   Grid.Column="0"
+                                   Style="{StaticResource SecondaryLabel}"
+                                   Padding="0">
+                                <Label.Text>
+                                    <MultiBinding StringFormat="{}{0}{1}">
+                                        <Binding Path="Data.Data.Precipitation"/>
+                                        <Binding Path="Data.Units.Precipitation"/>
+                                    </MultiBinding>
+                                </Label.Text>
+                            </Label>
+                            <Label Grid.Row="2" 
+                                   Grid.Column="1"
+                                   Style="{StaticResource SecondaryLabel}"
+                                   Padding="0">
+                                <Label.Text>
+                                    <MultiBinding StringFormat="R {0}{1}">
+                                        <Binding Path="Data.Data.ApparentTemperature"/>
+                                        <Binding Path="Data.Units.ApparentTemperature"/>
+                                    </MultiBinding>
+                                </Label.Text>
+                            </Label>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Border>
+
+        <SearchBar Grid.Row="2" 
+                   HorizontalOptions="FillAndExpand"
+                   Style="{StaticResource CitySearchbar}"
+                   SearchCommand="{Binding SearchCommand}"
+                   SearchCommandParameter="{Binding Text, Source={x:RelativeSource Self}}"
+                   Placeholder="{Binding City}"/>
+    </Grid>
+</ContentView>

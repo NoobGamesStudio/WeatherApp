@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="WA_Front.View.CurrentView"
+             xmlns:apimodelC="clr-namespace:WA_WeatherAPI.Model.Current;assembly=WA-WeatherAPI"
+             xmlns:apimodelH="clr-namespace:WA_WeatherAPI.Model.Hourly;assembly=WA-WeatherAPI"
              xmlns:model="clr-namespace:WA_Front.Model"
              xmlns:viewmodel="clr-namespace:WA_Front.ViewModel"
+             x:DataType="{x:Type viewmodel:CurrentViewModel}"
              BackgroundColor="{StaticResource Primary}">
     <Grid RowDefinitions="350,150,Auto"
           ColumnDefinitions="350"
           RowSpacing="5"
           Padding="5">
-        <Border Grid.Row="0">
+        <Border Grid.Row="0"
+                BindingContext="{Binding CurrentWeather}">
             <Grid RowDefinitions="2*,*,*" 
                   ColumnDefinitions="*,*"
-                  BackgroundColor="{StaticResource Secondary}"
-                  BindingContext="{Binding CurrentWeather}"
-                  x:Name="MainGrid">
+                  x:DataType="{x:Type apimodelC:CurrentWeather}"
+                  BackgroundColor="{StaticResource Secondary}">
                 <Label Grid.Row="0" 
                        Grid.Column="0"
                        Style="{StaticResource SecondaryAccentLabel}"

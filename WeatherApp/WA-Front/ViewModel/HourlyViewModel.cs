@@ -1,41 +1,40 @@
 ﻿namespace WA_Front.ViewModel;
 
-[INotifyPropertyChanged]
-public partial class HourlyViewModel
+public partial class HourlyViewModel : ObservableObject
 {
-    [ObservableProperty]
-    public ObservableCollection<HourlyModel> hourlyWeather = new();
+    public ObservableCollection<HourlyModel> HourlyWeather { get; init; } = new();
 
     [ObservableProperty]
     public bool isLoading = true;
 
     public HourlyViewModel(Forecast forecast) 
     {
-        Task.Run(() => GetData(forecast, new() {{ "City", "Szczecin" }}));
+        GetData(forecast, new() {{ "City", "Szczecin" }});
 
         WeakReferenceMessenger.Default
             .Register<HourlyViewModel, string, string>(
                 this,
                 nameof(MessageChannels.Refresh),
-                (r, o) => r.GetData(forecast, new(){{ "City", o }}));
+                (r, o) => r.GetData(forecast, new() { { "City", o } }));
     }
 
-    void GetData(Forecast forecast, Dictionary<string, object> parameters) => Application.Current.Dispatcher.DispatchAsync(async () =>
+    async void GetData(Forecast forecast, Dictionary<string, object> parameters)
     {
-        Hourly hourly;
         IsLoading = true;
         HourlyWeather.Clear();
-        GC.Collect();
-        if (parameters.TryGetValue("City", out object city))
+        var hourly = Task.Run(() =>
         {
-            hourly = await forecast.Hourly(city as string);
-        }
-        else
-        {
-            hourly = await forecast.Hourly();
-        }
-        hourly?.Cast()
-            .ForEach(h => HourlyWeather.Add(h));
+            if (parameters.TryGetValue("City", out object city))
+            {
+                return forecast.Hourly(city as string);
+            }
+            else
+            {
+                return forecast.Hourly();
+            }
+        });
+        (await hourly)?.Cast()
+            .ForEach(HourlyWeather.Add);
         IsLoading = false;
-    });
+    }
 }

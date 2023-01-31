@@ -1,10 +1,8 @@
 ﻿namespace WA_Front.ViewModel;
 
-[INotifyPropertyChanged]
-public partial class CurrentViewModel
+public partial class CurrentViewModel : ObservableObject
 {
-    [ObservableProperty]
-    public ObservableCollection<DayPartWeatherModel> dayPartWeather = new();
+    public ObservableCollection<DayPartWeatherModel> DayPartWeather { get; init; } = new();
 
     [ObservableProperty]
     public CurrentWeather currentWeather;
@@ -14,50 +12,51 @@ public partial class CurrentViewModel
 
     public CurrentViewModel(Forecast forecast)
     {
-        Task.Run(() => GetData(forecast, new() {{ "City", "Szczecin" }}));
+        GetData(forecast, new() { { "City", "Szczecin" } });
 
         WeakReferenceMessenger.Default
             .Register<CurrentViewModel, string, string>(
                 this, 
                 nameof(MessageChannels.Refresh), 
-                (r, o) => r.GetData(forecast, new() {{ "City", o }}));
+                (r, o) => r.GetData(forecast, new() { { "City", o } }));
     }
 
-    void GetData(Forecast forecast, Dictionary<string, object> parameters) => Application.Current.Dispatcher.DispatchAsync(async () =>
+    async void GetData(Forecast forecast, Dictionary<string, object> parameters)
     {
-        await GetCurrent(forecast, parameters);
-        await GetPart(forecast, parameters);
-    });
-
-    async Task GetCurrent(Forecast forecast, Dictionary<string, object> parameters)
-    {
-        Current current;
-        if (parameters.TryGetValue("City", out object city))
-        {
-            current = await forecast.Current(city as string);
-        }
-        else
-        {
-            current = await forecast.Current();
-        }
-        CurrentWeather = current?.CurrentWeather;
-    }
-
-    async Task GetPart(Forecast forecast, Dictionary<string, object> parameters)
-    {
-        Hourly period;
-        if (parameters.TryGetValue("City", out object city))
-        {
-            period = await forecast.Hourly(city as string);
-        }
-        else
-        {
-            period = await forecast.Hourly();
-        }
-
         DayPartWeather.Clear();
+        var current = GetCurrent(forecast, parameters);
+        var part = GetPart(forecast, parameters);
+        CurrentWeather = (await current)?.CurrentWeather;
+        (await part)?.ForEach(DayPartWeather.Add);
+        City = forecast.City;
+    }
+
+    async Task<Current> GetCurrent(Forecast forecast, Dictionary<string, object> parameters)
+    {
+        if (parameters.TryGetValue("City", out object city))
+        {
+            return await forecast.Current(city as string);
+        }
+        else
+        {
+            return await forecast.Current();
+        }
+    }
+
+    async Task<List<DayPartWeatherModel>> GetPart(Forecast forecast, Dictionary<string, object> parameters)
+    {
+        Task<Hourly> period;
+        if (parameters.TryGetValue("City", out object city))
+        {
+            period = forecast.Hourly(city as string);
+        }
+        else
+        {
+            period = forecast.Hourly();
+        }
+
         GC.Collect();
-        period?.Cast()
+        return (await period)?.Cast()
             .SkipWhile(p => p.Data.Time < DateTime.UtcNow)
             .Where((p, i) => i % 6 == 0)
             .Take(3)
@@ -72,9 +71,7 @@ public partial class CurrentViewModel
                 },
                 Data = p
             })
-            .ToList()
-            .ForEach(p => DayPartWeather.Add(p));
-        City = forecast.City;
+            .ToList();       
     }
 
     [RelayCommand]

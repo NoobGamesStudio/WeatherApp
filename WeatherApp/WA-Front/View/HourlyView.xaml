@@ -1,105 +1,112 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:controls="clr-namespace:WA_Front.Controls"
              xmlns:apimodel="clr-namespace:WA_WeatherAPI.Model.Hourly;assembly=WA-WeatherAPI"
+             xmlns:viewmodel="clr-namespace:WA_Front.ViewModel"
+             x:DataType="{x:Type viewmodel:HourlyViewModel}"
              x:Class="WA_Front.View.HourlyView">
-    <VerticalStackLayout BindableLayout.ItemsSource="{Binding HourlyWeather}" 
-                         Spacing="5"
-                         Padding="5">
+    <Grid RowDefinitions="*,Auto">
         <ActivityIndicator IsRunning="True"
-                           IsVisible="{Binding IsLoading}"/>
-        <BindableLayout.ItemTemplate>
-            <DataTemplate>
-                <Border x:DataType="apimodel:HourlyModel">
-                    <controls:Expander Orientation="Bottom">
-                        <controls:Expander.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
-                        </controls:Expander.GestureRecognizers>
-                        <controls:Expander.HeaderContent>
-                            <Grid ColumnDefinitions="Auto,*,*,*,*,*"
-                                  RowDefinitions="50"
-                                  BackgroundColor="{StaticResource Primary}">
-                                <Image Grid.Column="0"
-                                       BackgroundColor="{StaticResource Accent}"
-                                       Source="{Binding Data.WeatherImage, StringFormat='p50.png'}"/>
-                                <Label Grid.Column="1"
-                                       Style="{StaticResource AccentLabel}"
-                                       Text="{Binding Data.Time, StringFormat='{0:dd/MM HH:mm}'}"/>
-                                <Label Grid.Column="2"
-                                       Style="{StaticResource PrimaryLabel}">
-                                    <Label.Text>
-                                        <MultiBinding StringFormat="{}{0}{1}">
-                                            <Binding Path="Data.Temperature2M"/>
-                                            <Binding Path="Units.Temperature2M"/>
-                                        </MultiBinding>
-                                    </Label.Text>
-                                </Label>
-                                <Label Grid.Column="3"
-                                       Style="{StaticResource PrimaryLabel}">
-                                    <Label.Text>
-                                        <MultiBinding StringFormat="Real {0}{1}">
-                                            <Binding Path="Data.ApparentTemperature"/>
-                                            <Binding Path="Units.ApparentTemperature"/>
-                                        </MultiBinding>
-                                    </Label.Text>
-                                </Label>
-                                <Label Grid.Column="4"
-                                       Style="{StaticResource PrimaryLabel}">
-                                    <Label.Text>
-                                        <MultiBinding StringFormat="Cloudcover: {0}{1}">
-                                            <Binding Path="Data.Cloudcover"/>
-                                            <Binding Path="Units.Cloudcover"/>
-                                        </MultiBinding>
-                                    </Label.Text>
-                                </Label>
-                                <Label Grid.Column="5"
-                                       Style="{StaticResource PrimaryLabel}">
-                                    <Label.Text>
-                                        <MultiBinding StringFormat="Visibility: {0}{1}">
-                                            <Binding Path="Data.Visibility"/>
-                                            <Binding Path="Units.Visibility"/>
-                                        </MultiBinding>
-                                    </Label.Text>
-                                </Label>
-                            </Grid>
-                        </controls:Expander.HeaderContent>
-                        <controls:Expander.MainContent>
-                            <Grid ColumnDefinitions="Auto,*,*,*,*"
-                                  RowDefinitions="50"
-                                  BackgroundColor="{StaticResource Secondary}">
-                                <Label Grid.Column="1"
-                                       Style="{StaticResource SecondaryLabel}">
-                                    <Label.Text>
-                                        <MultiBinding StringFormat="Precipation: {0}{1}">
-                                            <Binding Path="Data.Precipitation"/>
-                                            <Binding Path="Units.Precipitation"/>
-                                        </MultiBinding>
-                                    </Label.Text>
-                                </Label>
-                                <Label Grid.Column="2"
-                                       Style="{StaticResource SecondaryLabel}">
-                                    <Label.Text>
-                                        <MultiBinding StringFormat="SurfacePressure: {0}{1}">
-                                            <Binding Path="Data.SurfacePressure"/>
-                                            <Binding Path="Units.SurfacePressure"/>
-                                        </MultiBinding>
-                                    </Label.Text>
-                                </Label>
-                                <Label Grid.Column="3"
-                                       Style="{StaticResource SecondaryLabel}">
-                                    <Label.Text>
-                                        <MultiBinding StringFormat="Relativehumidity: {0}{1}">
-                                            <Binding Path="Data.Relativehumidity2M"/>
-                                            <Binding Path="Units.Relativehumidity2M"/>
-                                        </MultiBinding>
-                                    </Label.Text>
-                                </Label>
-                            </Grid>
-                        </controls:Expander.MainContent>
-                    </controls:Expander>
-                </Border>
-            </DataTemplate>
-        </BindableLayout.ItemTemplate>
-    </VerticalStackLayout>
+                           Grid.Row="0"
+                           IsVisible="{Binding IsLoading}" WidthRequest="50" HeightRequest="50"/>
+        <VerticalStackLayout BindableLayout.ItemsSource="{Binding HourlyWeather}" 
+                             Grid.Row="1"
+                             Spacing="5"
+                             Padding="5">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate>
+                    <Border x:DataType="apimodel:HourlyModel">
+                        <controls:Expander Orientation="Bottom">
+                            <controls:Expander.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                            </controls:Expander.GestureRecognizers>
+                            <controls:Expander.HeaderContent>
+                                <Grid ColumnDefinitions="Auto,*,*,*,*,*"
+                                      RowDefinitions="50"
+                                      BackgroundColor="{StaticResource Primary}">
+                                    <Image Grid.Column="0"
+                                           BackgroundColor="{StaticResource Accent}"
+                                           Source="{Binding Data.WeatherImage, StringFormat='p50.png'}"/>
+                                    <Label Grid.Column="1"
+                                           Style="{StaticResource AccentLabel}"
+                                           Text="{Binding Data.Time, StringFormat='{0:dd/MM HH:mm}'}"/>
+                                    <Label Grid.Column="2"
+                                           Style="{StaticResource PrimaryLabel}">
+                                        <Label.Text>
+                                            <MultiBinding StringFormat="{}{0}{1}">
+                                                <Binding Path="Data.Temperature2M"/>
+                                                <Binding Path="Units.Temperature2M"/>
+                                            </MultiBinding>
+                                        </Label.Text>
+                                    </Label>
+                                    <Label Grid.Column="3"
+                                           Style="{StaticResource PrimaryLabel}">
+                                        <Label.Text>
+                                            <MultiBinding StringFormat="Real {0}{1}">
+                                                <Binding Path="Data.ApparentTemperature"/>
+                                                <Binding Path="Units.ApparentTemperature"/>
+                                            </MultiBinding>
+                                        </Label.Text>
+                                    </Label>
+                                    <Label Grid.Column="4"
+                                           Style="{StaticResource PrimaryLabel}">
+                                        <Label.Text>
+                                            <MultiBinding StringFormat="Cloudcover: {0}{1}">
+                                                <Binding Path="Data.Cloudcover"/>
+                                                <Binding Path="Units.Cloudcover"/>
+                                            </MultiBinding>
+                                        </Label.Text>
+                                    </Label>
+                                    <Label Grid.Column="5"
+                                           Style="{StaticResource PrimaryLabel}">
+                                        <Label.Text>
+                                            <MultiBinding StringFormat="Visibility: {0}{1}">
+                                                <Binding Path="Data.Visibility"/>
+                                                <Binding Path="Units.Visibility"/>
+                                            </MultiBinding>
+                                        </Label.Text>
+                                    </Label>
+                                </Grid>
+                            </controls:Expander.HeaderContent>
+                            <controls:Expander.MainContent>
+                                <Grid ColumnDefinitions="Auto,*,*,*,*"
+                                      RowDefinitions="50"
+                                      BackgroundColor="{StaticResource Secondary}">
+                                    <Label Grid.Column="1"
+                                           Style="{StaticResource SecondaryLabel}">
+                                        <Label.Text>
+                                            <MultiBinding StringFormat="Precipation: {0}{1}">
+                                                <Binding Path="Data.Precipitation"/>
+                                                <Binding Path="Units.Precipitation"/>
+                                            </MultiBinding>
+                                        </Label.Text>
+                                    </Label>
+                                    <Label Grid.Column="2"
+                                           Style="{StaticResource SecondaryLabel}">
+                                        <Label.Text>
+                                            <MultiBinding StringFormat="SurfacePressure: {0}{1}">
+                                                <Binding Path="Data.SurfacePressure"/>
+                                                <Binding Path="Units.SurfacePressure"/>
+                                            </MultiBinding>
+                                        </Label.Text>
+                                    </Label>
+                                    <Label Grid.Column="3"
+                                           Style="{StaticResource SecondaryLabel}">
+                                        <Label.Text>
+                                            <MultiBinding StringFormat="Relativehumidity: {0}{1}">
+                                                <Binding Path="Data.Relativehumidity2M"/>
+                                                <Binding Path="Units.Relativehumidity2M"/>
+                                            </MultiBinding>
+                                        </Label.Text>
+                                    </Label>
+                                </Grid>
+                            </controls:Expander.MainContent>
+                        </controls:Expander>
+                    </Border>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </VerticalStackLayout>
+    </Grid>
 </ContentView>

@@ -1,40 +1,39 @@
 ﻿namespace WA_Front.ViewModel;
 
-[INotifyPropertyChanged]
-public partial class CalendarViewModel
+public partial class CalendarViewModel : ObservableObject
 {
-    [ObservableProperty]
-    public ObservableCollection<DailyModel> dailyWeather = new();
+    public ObservableCollection<DailyModel> DailyWeather { get; init; } = new();
 
     [ObservableProperty]
     public bool isLoading = true;
 
     public CalendarViewModel(Forecast forecast)
     {
-        Task.Run(() => GetData(forecast, new() { { "City", "Szczecin" } }));
+        GetData(forecast, new() { { "City", "Szczecin" } });
         WeakReferenceMessenger.Default
             .Register<CalendarViewModel, string, string>(
                 this, 
                 nameof(MessageChannels.Refresh), 
-                (r, o) => r.GetData(forecast, new() {{ "City", o }}));
+                (r, o) => r.GetData(forecast, new() { { "City", o } }));
     }
 
-    void GetData(Forecast forecast, Dictionary<string, object> parameters) => Application.Current.Dispatcher.DispatchAsync(async () =>
+    async void GetData(Forecast forecast, Dictionary<string, object> parameters)
     {
-        Daily daily;
         IsLoading = true;
         DailyWeather.Clear();
-        GC.Collect();
-        if (parameters.TryGetValue("City", out object city))
+        var daily = Task.Run(() =>
         {
-            daily = await forecast.Daily(city as string);
-        }
-        else
-        {
-            daily = await forecast.Daily();
-        }
-        daily?.Cast()
-            .ForEach(d => DailyWeather.Add(d));
+            if (parameters.TryGetValue("City", out object city))
+            {
+                 return forecast.Daily(city as string);
+            }
+            else
+            {
+                 return forecast.Daily();
+            }
+        });
+        (await daily)?.Cast()
+            .ForEach(DailyWeather.Add);
         IsLoading = false;
-    });
+    }
 }

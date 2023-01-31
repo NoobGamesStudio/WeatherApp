@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:controls="clr-namespace:WA_Front.Controls"
              xmlns:apimodel="clr-namespace:WA_WeatherAPI.Model.Daily;assembly=WA-WeatherAPI"
              xmlns:viewmodel="clr-namespace:WA_Front.ViewModel"
@@ -27,172 +28,178 @@
             </Setter>
         </Style>
     </ContentView.Resources>
-    <controls:Expander Orientation="Right" 
+    <Grid RowDefinitions="*,Auto">
+        <ActivityIndicator IsRunning="True"
+                           Grid.Row="0"
+                           IsVisible="{Binding IsLoading}" WidthRequest="50" HeightRequest="50"/>
+        <controls:Expander Orientation="Right" 
+                           Grid.Row="1"
                        x:Name="expander" 
                        VerticalOptions="FillAndExpand">
-        <controls:Expander.HeaderContent>
-            <controls:HorizontalFlexLayout Spacing="10"
+            <controls:Expander.HeaderContent>
+                <controls:HorizontalFlexLayout Spacing="10"
                                            Padding="5"
                                            HorizontalOptions="Center"
                                            BindableLayout.ItemsSource="{Binding DailyWeather}">
-                <BindableLayout.ItemTemplate>
-                    <DataTemplate>
-                        <RadioButton IsChecked="{Binding IsExpanded, Source={x:Reference expander}, Mode=OneWayToSource}"
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <RadioButton IsChecked="{Binding IsExpanded, Source={x:Reference expander}, Mode=OneWayToSource}"
                                      x:DataType="apimodel:DailyModel">
-                            <RadioButton.ControlTemplate>
-                                <ControlTemplate>
-                                    <Border WidthRequest="150"
+                                <RadioButton.ControlTemplate>
+                                    <ControlTemplate>
+                                        <Border WidthRequest="150"
                                             HeightRequest="150">
-                                        <Grid RowDefinitions="*,*"
+                                            <Grid RowDefinitions="*,*"
                                               ColumnDefinitions="*,*"
                                               BindingContext="{TemplateBinding BindingContext}">
-                                            <Grid.GestureRecognizers>
-                                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" 
+                                                <Grid.GestureRecognizers>
+                                                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" 
                                                                       CommandParameter="{TemplateBinding}"/>
-                                            </Grid.GestureRecognizers>
-                                            <Image Grid.Row="0"
+                                                </Grid.GestureRecognizers>
+                                                <Image Grid.Row="0"
                                                    Grid.Column="0"
                                                    BackgroundColor="{StaticResource Accent}"
                                                    Source="{Binding Data.WeatherImage, StringFormat='p50.png'}"/>
-                                            <Label Grid.Row="0"
+                                                <Label Grid.Row="0"
                                                    Grid.Column="1"
                                                    Style="{StaticResource AccentLabel}"
                                                    Text="{Binding Data.Time, StringFormat='{0:dd/MM/yyyy}'}"/>
-                                            <Label Grid.Row="1"
+                                                <Label Grid.Row="1"
                                                    Grid.Column="0"
                                                    Style="{StaticResource PrimaryLabel}">
-                                                <Label.Text>
-                                                    <MultiBinding StringFormat="Min: {0}{1}">
-                                                        <Binding Path="Data.Temperature2MMin"/>
-                                                        <Binding Path="Units.Temperature2MMin"/>
-                                                    </MultiBinding>
-                                                </Label.Text>
-                                            </Label>
-                                            <Label Grid.Row="1"
+                                                    <Label.Text>
+                                                        <MultiBinding StringFormat="Min: {0}{1}">
+                                                            <Binding Path="Data.Temperature2MMin"/>
+                                                            <Binding Path="Units.Temperature2MMin"/>
+                                                        </MultiBinding>
+                                                    </Label.Text>
+                                                </Label>
+                                                <Label Grid.Row="1"
                                                    Grid.Column="1"
                                                    Style="{StaticResource PrimaryLabel}">
-                                                <Label.Text>
-                                                    <MultiBinding StringFormat="Max: {0}{1}">
-                                                        <Binding Path="Data.Temperature2MMax"/>
-                                                        <Binding Path="Units.Temperature2MMax"/>
-                                                    </MultiBinding>
-                                                </Label.Text>
-                                            </Label>
-                                        </Grid>
-                                    </Border>
-                                </ControlTemplate>
-                            </RadioButton.ControlTemplate>
-                        </RadioButton>
-                    </DataTemplate>
-                </BindableLayout.ItemTemplate>
-            </controls:HorizontalFlexLayout>
-        </controls:Expander.HeaderContent>
-        <controls:Expander.MainContent>
-            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,*"
+                                                    <Label.Text>
+                                                        <MultiBinding StringFormat="Max: {0}{1}">
+                                                            <Binding Path="Data.Temperature2MMax"/>
+                                                            <Binding Path="Units.Temperature2MMax"/>
+                                                        </MultiBinding>
+                                                    </Label.Text>
+                                                </Label>
+                                            </Grid>
+                                        </Border>
+                                    </ControlTemplate>
+                                </RadioButton.ControlTemplate>
+                            </RadioButton>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </controls:HorizontalFlexLayout>
+            </controls:Expander.HeaderContent>
+            <controls:Expander.MainContent>
+                <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,*"
                   BackgroundColor="{x:StaticResource Primary}"
                   Padding="5"
                   RowSpacing="5"
                   x:DataType="apimodel:DailyModel"
                   x:Name="Content">
-                <Grid Grid.Row="0"
+                    <Grid Grid.Row="0"
                       ColumnDefinitions="*,*">
-                    <Image Grid.Column="0"
+                        <Image Grid.Column="0"
                        Source="{Binding Data.WeatherImage, StringFormat='p50.png'}"/>
-                    <Grid Grid.Column="1"
+                        <Grid Grid.Column="1"
                           RowDefinitions="*,*">
-                        <Label Grid.Row="0"
+                            <Label Grid.Row="0"
                                Style="{StaticResource PrimaryLabel}"
                                FontSize="18">
-                            <Label.Text>
-                                <MultiBinding StringFormat="Max: {0}{1}">
-                                    <Binding Path="Data.Temperature2MMax"/>
-                                    <Binding Path="Units.Temperature2MMax"/>
-                                </MultiBinding>
-                            </Label.Text>
-                        </Label>
-                        <Label Grid.Row="1"
+                                <Label.Text>
+                                    <MultiBinding StringFormat="Max: {0}{1}">
+                                        <Binding Path="Data.Temperature2MMax"/>
+                                        <Binding Path="Units.Temperature2MMax"/>
+                                    </MultiBinding>
+                                </Label.Text>
+                            </Label>
+                            <Label Grid.Row="1"
                                Style="{StaticResource PrimaryLabel}"
                                FontSize="18">
-                            <Label.Text>
-                                <MultiBinding StringFormat="Min: {0}{1}">
-                                    <Binding Path="Data.Temperature2MMin"/>
-                                    <Binding Path="Units.Temperature2MMin"/>
-                                </MultiBinding>
-                            </Label.Text>
-                        </Label>
+                                <Label.Text>
+                                    <MultiBinding StringFormat="Min: {0}{1}">
+                                        <Binding Path="Data.Temperature2MMin"/>
+                                        <Binding Path="Units.Temperature2MMin"/>
+                                    </MultiBinding>
+                                </Label.Text>
+                            </Label>
+                        </Grid>
                     </Grid>
+                    <Label Grid.Row="1"
+                       Style="{StaticResource AccentLabel}">
+                        <Label.Text>
+                            <MultiBinding StringFormat="Sunrise: {0}">
+                                <Binding Path="Data.Sunrise"/>
+                            </MultiBinding>
+                        </Label.Text>
+                    </Label>
+                    <Label Grid.Row="2"
+                       Style="{StaticResource AccentLabel}">
+                        <Label.Text>
+                            <MultiBinding StringFormat="Sunset: {0}">
+                                <Binding Path="Data.Sunset"/>
+                            </MultiBinding>
+                        </Label.Text>
+                    </Label>
+                    <Label Grid.Row="3"
+                       Style="{StaticResource AccentLabel}">
+                        <Label.Text>
+                            <MultiBinding StringFormat="PrecipitationSum: {0}{1}">
+                                <Binding Path="Data.PrecipitationSum"/>
+                                <Binding Path="Units.PrecipitationSum"/>
+                            </MultiBinding>
+                        </Label.Text>
+                    </Label>
+                    <Label Grid.Row="4"
+                       Style="{StaticResource AccentLabel}">
+                        <Label.Text>
+                            <MultiBinding StringFormat="PrecipitationHours: {0}{1}">
+                                <Binding Path="Data.PrecipitationHours"/>
+                                <Binding Path="Units.PrecipitationHours"/>
+                            </MultiBinding>
+                        </Label.Text>
+                    </Label>
+                    <Label Grid.Row="5"
+                       Style="{StaticResource AccentLabel}">
+                        <Label.Text>
+                            <MultiBinding StringFormat="Windspeed10MMax: {0}{1}">
+                                <Binding Path="Data.Windspeed10MMax"/>
+                                <Binding Path="Units.Windspeed10MMax"/>
+                            </MultiBinding>
+                        </Label.Text>
+                    </Label>
+                    <Label Grid.Row="6"
+                       Style="{StaticResource AccentLabel}">
+                        <Label.Text>
+                            <MultiBinding StringFormat="Windgusts10MMax: {0}{1}">
+                                <Binding Path="Data.Windgusts10MMax"/>
+                                <Binding Path="Units.Windgusts10MMax"/>
+                            </MultiBinding>
+                        </Label.Text>
+                    </Label>
+                    <Label Grid.Row="7"
+                       Style="{StaticResource AccentLabel}">
+                        <Label.Text>
+                            <MultiBinding StringFormat="Winddirection10MDominant: {0}{1}">
+                                <Binding Path="Data.Winddirection10MDominant"/>
+                                <Binding Path="Units.Winddirection10MDominant"/>
+                            </MultiBinding>
+                        </Label.Text>
+                    </Label>
+                    <Label Grid.Row="8"
+                       Style="{StaticResource AccentLabel}">
+                        <Label.Text>
+                            <MultiBinding StringFormat="ShortwaveRadiationSum: {0}{1}">
+                                <Binding Path="Data.ShortwaveRadiationSum"/>
+                                <Binding Path="Units.ShortwaveRadiationSum"/>
+                            </MultiBinding>
+                        </Label.Text>
+                    </Label>
                 </Grid>
-                <Label Grid.Row="1"
-                       Style="{StaticResource AccentLabel}">
-                    <Label.Text>
-                        <MultiBinding StringFormat="Sunrise: {0}">
-                            <Binding Path="Data.Sunrise"/>
-                        </MultiBinding>
-                    </Label.Text>
-                </Label>
-                <Label Grid.Row="2"
-                       Style="{StaticResource AccentLabel}">
-                    <Label.Text>
-                        <MultiBinding StringFormat="Sunset: {0}">
-                            <Binding Path="Data.Sunset"/>
-                        </MultiBinding>
-                    </Label.Text>
-                </Label>
-                <Label Grid.Row="3"
-                       Style="{StaticResource AccentLabel}">
-                    <Label.Text>
-                        <MultiBinding StringFormat="PrecipitationSum: {0}{1}">
-                            <Binding Path="Data.PrecipitationSum"/>
-                            <Binding Path="Units.PrecipitationSum"/>
-                        </MultiBinding>
-                    </Label.Text>
-                </Label>
-                <Label Grid.Row="4"
-                       Style="{StaticResource AccentLabel}">
-                    <Label.Text>
-                        <MultiBinding StringFormat="PrecipitationHours: {0}{1}">
-                            <Binding Path="Data.PrecipitationHours"/>
-                            <Binding Path="Units.PrecipitationHours"/>
-                        </MultiBinding>
-                    </Label.Text>
-                </Label>
-                <Label Grid.Row="5"
-                       Style="{StaticResource AccentLabel}">
-                    <Label.Text>
-                        <MultiBinding StringFormat="Windspeed10MMax: {0}{1}">
-                            <Binding Path="Data.Windspeed10MMax"/>
-                            <Binding Path="Units.Windspeed10MMax"/>
-                        </MultiBinding>
-                    </Label.Text>
-                </Label>
-                <Label Grid.Row="6"
-                       Style="{StaticResource AccentLabel}">
-                    <Label.Text>
-                        <MultiBinding StringFormat="Windgusts10MMax: {0}{1}">
-                            <Binding Path="Data.Windgusts10MMax"/>
-                            <Binding Path="Units.Windgusts10MMax"/>
-                        </MultiBinding>
-                    </Label.Text>
-                </Label>
-                <Label Grid.Row="7"
-                       Style="{StaticResource AccentLabel}">
-                    <Label.Text>
-                        <MultiBinding StringFormat="Winddirection10MDominant: {0}{1}">
-                            <Binding Path="Data.Winddirection10MDominant"/>
-                            <Binding Path="Units.Winddirection10MDominant"/>
-                        </MultiBinding>
-                    </Label.Text>
-                </Label>
-                <Label Grid.Row="8"
-                       Style="{StaticResource AccentLabel}">
-                    <Label.Text>
-                        <MultiBinding StringFormat="ShortwaveRadiationSum: {0}{1}">
-                            <Binding Path="Data.ShortwaveRadiationSum"/>
-                            <Binding Path="Units.ShortwaveRadiationSum"/>
-                        </MultiBinding>
-                    </Label.Text>
-                </Label>
-            </Grid>
-        </controls:Expander.MainContent>
-    </controls:Expander>
+            </controls:Expander.MainContent>
+        </controls:Expander>
+    </Grid>
 </ContentView>

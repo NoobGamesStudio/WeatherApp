@@ -9,10 +9,10 @@ public record Current
     public double Longitude { get; init; }
 
     [JsonPropertyName("timezone")]
-    public string? Timezone { get; init; }
+    public string Timezone { get; init; }
 
     [JsonPropertyName("current_weather")]
-    public CurrentWeather? CurrentWeather { get; init; }
+    public CurrentWeather CurrentWeather { get; init; }
 }
 
 public record CurrentWeather
@@ -27,7 +27,8 @@ public record CurrentWeather
     public float Winddirection { get; init; }
 
     [JsonPropertyName("weathercode")]
-    public long Weathercode { get; init; }
+    [JsonConverter(typeof(SingleWeatherCodeJsonConverter))]
+    public string WeatherImage { get; init; }
 
     [JsonPropertyName("time")]
     public DateTime? Time { get; init; }

@@ -5,13 +5,16 @@
              xmlns:controls="clr-namespace:WA_Front.Controls"
              xmlns:apimodel="clr-namespace:WA_WeatherAPI.Model.Hourly;assembly=WA-WeatherAPI"
              xmlns:viewmodel="clr-namespace:WA_Front.ViewModel"
+             VerticalOptions="FillAndExpand"
              x:DataType="{x:Type viewmodel:HourlyViewModel}"
              x:Class="WA_Front.View.HourlyView">
-    <Grid RowDefinitions="*,Auto">
+    <Grid RowDefinitions="*,Auto"
+          VerticalOptions="FillAndExpand">
         <ActivityIndicator IsRunning="True"
                            Grid.Row="0"
                            IsVisible="{Binding IsLoading}" WidthRequest="50" HeightRequest="50"/>
         <VerticalStackLayout BindableLayout.ItemsSource="{Binding HourlyWeather}" 
+                             VerticalOptions="FillAndExpand"
                              Grid.Row="1"
                              Spacing="5"
                              Padding="5">
@@ -28,7 +31,7 @@
                                       BackgroundColor="{StaticResource Primary}">
                                     <Image Grid.Column="0"
                                            BackgroundColor="{StaticResource Accent}"
-                                           Source="{Binding Data.WeatherImage, StringFormat='p50.png'}"/>
+                                           Source="{Binding Data.WeatherImage, StringFormat='{0}.png'}"/>
                                     <Label Grid.Column="1"
                                            Style="{StaticResource AccentLabel}"
                                            Text="{Binding Data.Time, StringFormat='{0:dd/MM HH:mm}'}"/>

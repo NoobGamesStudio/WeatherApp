@@ -6,9 +6,11 @@
              xmlns:apimodel="clr-namespace:WA_WeatherAPI.Model.Daily;assembly=WA-WeatherAPI"
              xmlns:viewmodel="clr-namespace:WA_Front.ViewModel"
              x:DataType="viewmodel:CalendarViewModel"
-             x:Class="WA_Front.View.CalendarView">
+             x:Class="WA_Front.View.CalendarView"
+             VerticalOptions="FillAndExpand">
     <ContentView.Resources>
         <Style TargetType="Border">
+            <Setter Property="StrokeShape" Value="Rectangle"/>
             <Setter Property="VisualStateManager.VisualStateGroups">
                 <VisualStateGroupList>
                     <VisualStateGroup Name="CheckedStates">
@@ -28,19 +30,21 @@
             </Setter>
         </Style>
     </ContentView.Resources>
-    <Grid RowDefinitions="*,Auto">
+    <Grid RowDefinitions="*,Auto"
+          VerticalOptions="FillAndExpand">
         <ActivityIndicator IsRunning="True"
                            Grid.Row="0"
                            IsVisible="{Binding IsLoading}" WidthRequest="50" HeightRequest="50"/>
         <controls:Expander Orientation="Right" 
                            Grid.Row="1"
-                       x:Name="expander" 
-                       VerticalOptions="FillAndExpand">
+                           x:Name="expander" 
+                           VerticalOptions="FillAndExpand">
             <controls:Expander.HeaderContent>
                 <controls:HorizontalFlexLayout Spacing="10"
-                                           Padding="5"
-                                           HorizontalOptions="Center"
-                                           BindableLayout.ItemsSource="{Binding DailyWeather}">
+                                               Padding="5"
+                                               HorizontalOptions="Center"
+                                               VerticalOptions="FillAndExpand"
+                                               BindableLayout.ItemsSource="{Binding DailyWeather}">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate>
                             <RadioButton IsChecked="{Binding IsExpanded, Source={x:Reference expander}, Mode=OneWayToSource}"
@@ -49,6 +53,9 @@
                                     <ControlTemplate>
                                         <Border WidthRequest="150"
                                             HeightRequest="150">
+                                            <Border.StrokeShape>
+                                                <Rectangle/>
+                                            </Border.StrokeShape>
                                             <Grid RowDefinitions="*,*"
                                               ColumnDefinitions="*,*"
                                               BindingContext="{TemplateBinding BindingContext}">
@@ -59,7 +66,7 @@
                                                 <Image Grid.Row="0"
                                                    Grid.Column="0"
                                                    BackgroundColor="{StaticResource Accent}"
-                                                   Source="{Binding Data.WeatherImage, StringFormat='p50.png'}"/>
+                                                   Source="{Binding Data.WeatherImage, StringFormat='{0}.png'}"/>
                                                 <Label Grid.Row="0"
                                                    Grid.Column="1"
                                                    Style="{StaticResource AccentLabel}"
@@ -98,12 +105,13 @@
                   BackgroundColor="{x:StaticResource Primary}"
                   Padding="5"
                   RowSpacing="5"
+                  VerticalOptions="FillAndExpand"
                   x:DataType="apimodel:DailyModel"
                   x:Name="Content">
                     <Grid Grid.Row="0"
                       ColumnDefinitions="*,*">
                         <Image Grid.Column="0"
-                       Source="{Binding Data.WeatherImage, StringFormat='p50.png'}"/>
+                       Source="{Binding Data.WeatherImage, StringFormat='{0}.png'}"/>
                         <Grid Grid.Column="1"
                           RowDefinitions="*,*">
                             <Label Grid.Row="0"

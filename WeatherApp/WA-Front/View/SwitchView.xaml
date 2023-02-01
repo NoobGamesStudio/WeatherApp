@@ -4,9 +4,12 @@
              xmlns:view="clr-namespace:WA_Front.View"
              xmlns:viewmodel="clr-namespace:WA_Front.ViewModel"
              x:DataType="viewmodel:SwitchViewModel"
+             VerticalOptions="FillAndExpand"
              x:Class="WA_Front.View.SwitchView">
     <Grid ColumnDefinitions="*,Auto">
-        <ScrollView Grid.Column="0">
+        <ScrollView Grid.Column="0"
+                    VerticalOptions="FillAndExpand"
+                    BackgroundColor="{StaticResource Secondary}">
             <ContentView Content="{Binding ChosenModel}"/>
         </ScrollView>
         <ScrollView Grid.Column="1">
